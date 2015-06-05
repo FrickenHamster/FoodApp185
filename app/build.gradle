@@ -37,9 +37,14 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.android.support:recyclerview-v7:21.0.0'
     compile 'com.android.support:cardview-v7:21.0.+'
     compile 'com.android.support:support-v4'
+    //compile project(':butterknife-6.1.0')
+    //compile project(':library-1.0.8')
+    compile 'com.lorentzos.swipecards:library:1.0.8'
+    compile 'com.jakewharton:butterknife:6.1.0'
+
 }
