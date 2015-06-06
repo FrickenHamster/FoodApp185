@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RestaurantsActivity"
+            android:name=".restaurants.RestaurantsActivity"
             android:label="@string/title_activity_restaurants" >
         </activity>
     </application>
