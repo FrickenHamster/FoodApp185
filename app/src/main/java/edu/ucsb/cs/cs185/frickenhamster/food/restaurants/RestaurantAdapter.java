@@ -22,6 +22,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
 	{
 		String name;
 		String imageUrl;
+		
 
 		public RestaurantViewItem(String name, String imageUrl)
 		{
