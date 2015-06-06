@@ -4,9 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/FoodApp185.iml" filepath="$PROJECT_DIR$/FoodApp185.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/butterknife-6.1.0/butterknife-6.1.0.iml" filepath="$PROJECT_DIR$/butterknife-6.1.0/butterknife-6.1.0.iml" />
-      <module fileurl="file://$PROJECT_DIR$/library-1.0.8/library-1.0.8.iml" filepath="$PROJECT_DIR$/library-1.0.8/library-1.0.8.iml" />
     </modules>
   </component>
 </project>
-
