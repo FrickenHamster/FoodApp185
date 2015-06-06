@@ -1,19 +1,29 @@
-package edu.ucsb.cs.cs185.frickenhamster.food;
+package edu.ucsb.cs.cs185.frickenhamster.food.restaurants;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.widget.*;
 import android.view.Menu;
 import android.view.MenuItem;
+import edu.ucsb.cs.cs185.frickenhamster.food.*;
 
 
 public class RestaurantsActivity extends Activity
 {
 
+	private RecyclerView recyclerView;
+	private RestaurantAdapter restaurantAdapter;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_restaurants);
+		
+		recyclerView = (RecyclerView) findViewById(R.id.restaurant_recycler_view);
+		restaurantAdapter = new RestaurantAdapter();
+		recyclerView.setAdapter(restaurantAdapter);
+		
 	}
 
 
