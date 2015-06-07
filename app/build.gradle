@@ -46,5 +46,6 @@ dependencies {
     //compile project(':library-1.0.8')
     compile 'com.lorentzos.swipecards:library:1.0.8'
     compile 'com.jakewharton:butterknife:6.1.0'
+    compile 'com.jjoe64:graphview:4.0.1'
 
 }
