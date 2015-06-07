@@ -25,7 +25,7 @@ import edu.ucsb.cs.cs185.frickenhamster.food.history.HistoryActivity;
 import edu.ucsb.cs.cs185.frickenhamster.food.FoodImage;
 import edu.ucsb.cs.cs185.frickenhamster.food.restaurants.RestaurantsActivity;
 
-
+//random change
 public class MainActivity extends Activity {
 
     private ArrayList<String> al;
