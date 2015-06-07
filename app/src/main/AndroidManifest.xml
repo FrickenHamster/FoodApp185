@@ -27,8 +27,9 @@
             android:parentActivityName=".MainActivity" >
         </activity>
         <activity
-            android:name=".history.HistoryAdapter"
-            android:label="@string/title_activity_history_adapter" >
+            android:name=".history.VisualizeActivity"
+            android:label="@string/title_activity_visualize"
+            android:parentActivityName=".history.HistoryActivity" >
         </activity>
     </application>
 

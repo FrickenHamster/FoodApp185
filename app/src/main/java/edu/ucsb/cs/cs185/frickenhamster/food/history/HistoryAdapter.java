@@ -19,7 +19,7 @@ import edu.ucsb.cs.cs185.frickenhamster.food.R;
  * Created by Dario on 6/62015.
  */
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHolder> {
-    private List<String> myDataset;
+    private List<String> myDataset; // replace with List<Food> later
     private HistoryActivity activity;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
