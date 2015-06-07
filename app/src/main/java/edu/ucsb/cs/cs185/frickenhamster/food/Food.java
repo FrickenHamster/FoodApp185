@@ -7,18 +7,16 @@ import java.util.*;
  * User: Hamster
  * Date: 6/2/2015
  * Time: 5:00 PM
- * 
+ * <p/>
  * specific food type
  */
-public class Food
-{
-	
-	private String name;
-	private ArrayList<Cuisine> cuisines;
-	
+public class Food {
 
-	public Food(String name)
-	{
-		this.name = name;
-	}
+    private String name;
+    private ArrayList<Cuisine> cuisines;
+
+
+    public Food(String name) {
+        this.name = name;
+    }
 }

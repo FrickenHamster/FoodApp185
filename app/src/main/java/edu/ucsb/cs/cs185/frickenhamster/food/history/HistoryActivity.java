@@ -73,7 +73,7 @@ public class HistoryActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    void visualizeHistory(){
+    void visualizeHistory() {
         Intent intent = new Intent(this, VisualizeActivity.class);
         startActivity(intent);
     }

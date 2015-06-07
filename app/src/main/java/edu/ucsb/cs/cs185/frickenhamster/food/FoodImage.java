@@ -6,12 +6,12 @@ public class FoodImage {
     private Bitmap mBitmap;
     private String foodType;
 
-    public FoodImage(Bitmap newBitmap, String foodCategory){
+    public FoodImage(Bitmap newBitmap, String foodCategory) {
         mBitmap = newBitmap;
         foodType = foodCategory;
     }
 
-    public String getFoodType(){
+    public String getFoodType() {
         return foodType;
     }
 

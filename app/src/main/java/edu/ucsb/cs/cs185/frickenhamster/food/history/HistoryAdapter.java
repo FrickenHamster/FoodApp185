@@ -80,18 +80,15 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
             Drawable myDrawable = holder.context.getResources().getDrawable(R.drawable.image1);
             Bitmap image = ((BitmapDrawable) myDrawable).getBitmap();
             holder.myPhotoView.setImageBitmap(image);
-        }
-        else if (myDataset.get(position).equals("Pizza")) {
+        } else if (myDataset.get(position).equals("Pizza")) {
             Drawable myDrawable = holder.context.getResources().getDrawable(R.drawable.image2);
             Bitmap image = ((BitmapDrawable) myDrawable).getBitmap();
             holder.myPhotoView.setImageBitmap(image);
-        }
-        else if (myDataset.get(position).equals("Steak")) {
+        } else if (myDataset.get(position).equals("Steak")) {
             Drawable myDrawable = holder.context.getResources().getDrawable(R.drawable.image3);
             Bitmap image = ((BitmapDrawable) myDrawable).getBitmap();
             holder.myPhotoView.setImageBitmap(image);
-        }
-        else if (myDataset.get(position).equals("Pancakes")) {
+        } else if (myDataset.get(position).equals("Pancakes")) {
             Drawable myDrawable = holder.context.getResources().getDrawable(R.drawable.image4);
             Bitmap image = ((BitmapDrawable) myDrawable).getBitmap();
             holder.myPhotoView.setImageBitmap(image);
