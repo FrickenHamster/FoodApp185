@@ -16,6 +16,12 @@ import android.widget.Toast;
 
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
+import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import butterknife.ButterKnife;
@@ -23,7 +29,7 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import edu.ucsb.cs.cs185.frickenhamster.food.history.HistoryActivity;
 import edu.ucsb.cs.cs185.frickenhamster.food.FoodImage;
-import edu.ucsb.cs.cs185.frickenhamster.food.restaurants.RestaurantsActivity;
+import edu.ucsb.cs.cs185.frickenhamster.food.restaurants.*;
 
 
 public class MainActivity extends Activity {
@@ -40,129 +46,160 @@ public class MainActivity extends Activity {
     SwipeFlingAdapterView flingContainer;
     private FoodImage fImage4;
     private Intent intent;
+    
+    private Context mainContext = this;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        intent = new Intent(this, RestaurantsActivity.class);
-        //startActivity(new Intent(this, RestaurantsActivity.class));
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+		
+		//startActivity(new Intent(this, RestaurantsActivity.class));
+		
+		ButterKnife.inject(this);
 
-        ButterKnife.inject(this);
+		myDrawableDefault = getResources().getDrawable(R.drawable.image4);
+		imageDefault = ((BitmapDrawable) myDrawableDefault).getBitmap();
+		al = new ArrayList<String>();
+		al.add("php");
+		al.add("c");
+		al.add("python");
+		al.add("java");
+		al.add("html");
+		al.add("c++");
+		al.add("css");
+		al.add("javascript");
 
-        myDrawableDefault = getResources().getDrawable(R.drawable.image4);
-        imageDefault = ((BitmapDrawable) myDrawableDefault).getBitmap();
-        al = new ArrayList<String>();
-        al.add("php");
-        al.add("c");
-        al.add("python");
-        al.add("java");
-        al.add("html");
-        al.add("c++");
-        al.add("css");
-        al.add("javascript");
-
-        array_image = new ArrayList<FoodImage>();
-        Drawable myDrawable = getResources().getDrawable(R.drawable.image1);
-        Bitmap image1 = ((BitmapDrawable) myDrawable).getBitmap();
-        FoodImage fImage1 = new FoodImage(image1, "humbarger");
+		array_image = new ArrayList<FoodImage>();
+		Drawable myDrawable = getResources().getDrawable(R.drawable.image1);
+		Bitmap image1 = ((BitmapDrawable) myDrawable).getBitmap();
+		FoodImage fImage1 = new FoodImage(image1, "Hamburger");
         array_image.add(fImage1);
-
-        Drawable myDrawable2 = getResources().getDrawable(R.drawable.image2);
-        Bitmap image2 = ((BitmapDrawable) myDrawable2).getBitmap();
-        FoodImage fImage2 = new FoodImage(image2, "frisbee");
-        array_image.add(fImage2);
-
-        Drawable myDrawable3 = getResources().getDrawable(R.drawable.image3);
-        Bitmap image3 = ((BitmapDrawable) myDrawable3).getBitmap();
-        FoodImage fImage3 = new FoodImage(image3, "meat");
+        
+		Drawable myDrawable2 = getResources().getDrawable(R.drawable.image2);
+		Bitmap image2 = ((BitmapDrawable) myDrawable2).getBitmap();
+        FoodImage fImage2 = new FoodImage(image2, "Pizza");
+		array_image.add(fImage2);
+        
+		Drawable myDrawable3 = getResources().getDrawable(R.drawable.image3);
+		Bitmap image3 = ((BitmapDrawable) myDrawable3).getBitmap();
+        FoodImage fImage3 = new FoodImage(image3, "Steak");
         array_image.add(fImage3);
 
         Drawable myDrawable4 = getResources().getDrawable(R.drawable.image4);
         Bitmap image4 = ((BitmapDrawable) myDrawable4).getBitmap();
-        fImage4 = new FoodImage(image4, "puncakes");
+        fImage4 = new FoodImage(image4, "Pancakes");
         array_image.add(fImage4);
 
         arrayPicAdapter = new CustomImageAdapter(this, array_image);
 
-
-        //CUSTOM ADAPTER
-        flingContainer.setAdapter(arrayPicAdapter);
-        flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
-            @Override
-            public void removeFirstObjectInAdapter() {
-                // this is the simplest way to delete an object from the Adapter (/AdapterView)
-                Log.d("LIST", "removed object!");
-                array_image.remove(0);
-                arrayPicAdapter.notifyDataSetChanged();
+        //temporarily creating the fake history file
+        boolean exists = false;
+        for (String file : fileList()) {
+            if (file == "history.txt") exists = true;
+        }
+        if (!exists) {
+            PrintWriter writer = null;
+            try {
+                writer = new PrintWriter(new BufferedOutputStream(openFileOutput("history.txt", MODE_PRIVATE)));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
             }
+            if (writer != null) {
+                writer.println("Pizza---Woodstocks---Tuesday, June 2nd, 2015");
+                writer.println("Pizza---Woodstocks---Wednesday, June 3rd, 2015");
+                writer.println("Hamburger---The Habit---Thursday, June 4th, 2015");
+                writer.println("Steak---Outback Steakhouse---Thursday, June 6th, 2015");
+                writer.println("Pancakes---Denny's---Thursday, June 7th, 2015");
+            }
+            writer.close();
+        }
 
-            @Override
-            public void onLeftCardExit(Object dataObject) {
-                //Do something on the left!
-                //You also have access to the original object.
-                //If you want to use it just cast it (String) dataObject
-                //makeToast(MainActivity.this, "Left!");
+
+		//CUSTOM ADAPTER
+		flingContainer.setAdapter(arrayPicAdapter);
+		flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener()
+		{
+			@Override
+			public void removeFirstObjectInAdapter()
+			{
+				// this is the simplest way to delete an object from the Adapter (/AdapterView)
+				Log.d("LIST", "removed object!");
+				array_image.remove(0);
+				arrayPicAdapter.notifyDataSetChanged();
+			}
+
+			@Override
+			public void onLeftCardExit(Object dataObject)
+			{
+				//Do something on the left!
+				//You also have access to the original object.
+				//If you want to use it just cast it (String) dataObject
                 FoodImage mFoodImage = (FoodImage) dataObject;
                 String foodType = mFoodImage.getFoodType();
-                makeToast(MainActivity.this, "Left: " + foodType);
-            }
+                makeToast(MainActivity.this, "Left!" + foodType);
+			}
 
-            @Override
-            public void onRightCardExit(Object dataObject) {
-                //makeToast(MainActivity.this, "Right!");// + "Add " + (String)dataObject + "to history");
+			@Override
+			public void onRightCardExit(Object dataObject) {
                 FoodImage mFoodImage = (FoodImage) dataObject;
                 String foodType = mFoodImage.getFoodType();
-                makeToast(MainActivity.this, "Right: " + foodType);
+                makeToast(MainActivity.this, "Right!" + foodType);
+                intent = new Intent(mainContext, RestaurantsActivity.class);
                 startActivity(intent);
-            }
+			}
 
-            @Override
-            public void onAdapterAboutToEmpty(int itemsInAdapter) {
-                // Ask for more data here
-                array_image.add(fImage4);
-                arrayPicAdapter.notifyDataSetChanged();
-                Log.d("LIST", "notified");
-                i++;
-            }
+			@Override
+			public void onAdapterAboutToEmpty(int itemsInAdapter)
+			{
+				// Ask for more data here
+				array_image.add(fImage4);
+				arrayPicAdapter.notifyDataSetChanged();
+				Log.d("LIST", "notified");
+				i++;
+			}
 
-            @Override
-            public void onScroll(float scrollProgressPercent) {
-                View view = flingContainer.getSelectedView();
-                //view.findViewById(R.id.item_swipe_right_indicator).setAlpha(scrollProgressPercent < 0 ? -scrollProgressPercent : 0);
-                //view.findViewById(R.id.item_swipe_left_indicator).setAlpha(scrollProgressPercent > 0 ? scrollProgressPercent : 0);
-            }
-        });
-
-
-        // Optionally add an OnItemClickListener
-        flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClicked(int itemPosition, Object dataObject) {
-                makeToast(MainActivity.this, "Clicked!");
-            }
-        });
-
-    }
-
-    static void makeToast(Context ctx, String s) {
-        Toast.makeText(ctx, s, Toast.LENGTH_SHORT).show();
-    }
+			@Override
+			public void onScroll(float scrollProgressPercent)
+			{
+				View view = flingContainer.getSelectedView();
+				//view.findViewById(R.id.item_swipe_right_indicator).setAlpha(scrollProgressPercent < 0 ? -scrollProgressPercent : 0);
+				//view.findViewById(R.id.item_swipe_left_indicator).setAlpha(scrollProgressPercent > 0 ? scrollProgressPercent : 0);
+			}
+		});
 
 
-    @OnClick(R.id.right)
-    public void right() {
-        /**
-         * Trigger the right event manually.
-         */
-        flingContainer.getTopCardListener().selectRight();
-    }
+		// Optionally add an OnItemClickListener
+		flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClicked(int itemPosition, Object dataObject) {
+				makeToast(MainActivity.this, "Clicked!");
+			}
+		});
 
-    @OnClick(R.id.left)
-    public void left() {
-        flingContainer.getTopCardListener().selectLeft();
-    }
+	}
+
+	static void makeToast(Context ctx, String s)
+	{
+		Toast.makeText(ctx, s, Toast.LENGTH_SHORT).show();
+	}
+
+
+	@OnClick(R.id.right)
+	public void right()
+	{
+		/**
+		 * Trigger the right event manually.
+		 */
+		flingContainer.getTopCardListener().selectRight();
+	}
+
+	@OnClick(R.id.left)
+	public void left()
+	{
+		flingContainer.getTopCardListener().selectLeft();
+	}
 
 
     @Override
