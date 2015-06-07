@@ -33,6 +33,7 @@ import edu.ucsb.cs.cs185.frickenhamster.food.restaurants.*;
 
 
 public class MainActivity extends Activity {
+    public final static String FOOD_TYPE = "edu.ucsb.cs.cs185.frickenhamster.food.FOOD_TYPE";
 
     private ArrayList<String> al;
     private ArrayList<FoodImage> array_image;
@@ -95,7 +96,7 @@ public class MainActivity extends Activity {
         arrayPicAdapter = new CustomImageAdapter(this, array_image);
 
         //temporarily creating the fake history file
-        boolean exists = false;
+        /*boolean exists = false;
         for (String file : fileList()) {
             if (file == "history.txt") exists = true;
         }
@@ -115,7 +116,7 @@ public class MainActivity extends Activity {
             }
             writer.close();
         }
-
+        */
 
 		//CUSTOM ADAPTER
 		flingContainer.setAdapter(arrayPicAdapter);
@@ -147,6 +148,7 @@ public class MainActivity extends Activity {
                 String foodType = mFoodImage.getFoodType();
                 makeToast(MainActivity.this, "Right!" + foodType);
                 intent = new Intent(mainContext, RestaurantsActivity.class);
+                intent.putExtra(FOOD_TYPE, foodType);
                 startActivity(intent);
 			}
 

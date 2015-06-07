@@ -1,6 +1,7 @@
 package edu.ucsb.cs.cs185.frickenhamster.food.restaurants;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.*;
 import android.view.Menu;
@@ -23,10 +24,13 @@ public class RestaurantsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurants);
 
+        Intent intent = getIntent();
+        String foodType = intent.getStringExtra(MainActivity.FOOD_TYPE);
+
         recyclerView = (RecyclerView) findViewById(R.id.restaurant_recycler_view);
         restaurantLayoutManager = new LinearLayoutManager(this);
         restaurantLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        restaurantAdapter = new RestaurantAdapter(this);
+        restaurantAdapter = new RestaurantAdapter(this, foodType);
         recyclerView.setLayoutManager(restaurantLayoutManager);
         recyclerView.setAdapter(restaurantAdapter);
 

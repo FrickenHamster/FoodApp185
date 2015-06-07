@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.Buffer;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import edu.ucsb.cs.cs185.frickenhamster.food.FoodOrder;
@@ -71,7 +72,7 @@ public class HistoryActivity extends Activity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        Collections.reverse(myDataset);
         mAdapter = new HistoryAdapter(this, myDataset);
         mRecyclerView.setAdapter(mAdapter);
 
