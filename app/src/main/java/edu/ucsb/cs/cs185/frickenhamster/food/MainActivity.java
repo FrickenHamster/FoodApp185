@@ -23,22 +23,23 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import edu.ucsb.cs.cs185.frickenhamster.food.history.HistoryActivity;
 import edu.ucsb.cs.cs185.frickenhamster.food.restaurants.*;
+import edu.ucsb.cs.cs185.frickenhamster.food.restaurants.FoodImage;
 
 
 public class MainActivity extends Activity
 {
 
 	private ArrayList<String> al;
-	private ArrayList<Bitmap> array_image;
+	private ArrayList<FoodImage> array_image;
 
 	private ArrayAdapter<String> arrayAdapter;
-	private customImageAdapter arrayPicAdapter;
+	private CustomImageAdapter arrayPicAdapter;
 	private int i;
 	private Drawable myDrawableDefault;
 	private Bitmap imageDefault;
 	@InjectView(R.id.frame)
 	SwipeFlingAdapterView flingContainer;
-
+    private FoodImage fImage4;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -62,19 +63,28 @@ public class MainActivity extends Activity
 		al.add("css");
 		al.add("javascript");
 
-		array_image = new ArrayList<Bitmap>();
-		Drawable myDrawable = getResources().getDrawable(R.drawable.image1);
-		Bitmap image1 = ((BitmapDrawable) myDrawable).getBitmap();
-		array_image.add(image1);
-		Drawable myDrawable2 = getResources().getDrawable(R.drawable.image2);
-		Bitmap image2 = ((BitmapDrawable) myDrawable2).getBitmap();
-		array_image.add(image2);
-		Drawable myDrawable3 = getResources().getDrawable(R.drawable.image3);
-		Bitmap image3 = ((BitmapDrawable) myDrawable3).getBitmap();
-		array_image.add(image3);
-		//array_image.add(R.drawable.image4);
+        array_image = new ArrayList<FoodImage>();
+        Drawable myDrawable = getResources().getDrawable(R.drawable.image1);
+        Bitmap image1 = ((BitmapDrawable) myDrawable).getBitmap();
+        FoodImage fImage1 = new FoodImage(image1, "humbarger");
+        array_image.add(fImage1);
 
-		arrayPicAdapter = new customImageAdapter(this, array_image);
+        Drawable myDrawable2 = getResources().getDrawable(R.drawable.image2);
+        Bitmap image2 = ((BitmapDrawable) myDrawable2).getBitmap();
+        FoodImage fImage2 = new FoodImage(image2, "frisbee");
+        array_image.add(fImage2);
+
+        Drawable myDrawable3 = getResources().getDrawable(R.drawable.image3);
+        Bitmap image3 = ((BitmapDrawable) myDrawable3).getBitmap();
+        FoodImage fImage3 = new FoodImage(image3, "meat");
+        array_image.add(fImage3);
+
+        Drawable myDrawable4 = getResources().getDrawable(R.drawable.image4);
+        Bitmap image4 = ((BitmapDrawable) myDrawable4).getBitmap();
+        fImage4 = new FoodImage(image4, "puncakes");
+        array_image.add(fImage4);
+
+		arrayPicAdapter = new CustomImageAdapter(this, array_image);
 
 
 		//CUSTOM ADAPTER
@@ -96,20 +106,26 @@ public class MainActivity extends Activity
 				//Do something on the left!
 				//You also have access to the original object.
 				//If you want to use it just cast it (String) dataObject
-				makeToast(MainActivity.this, "Left!");
+				//makeToast(MainActivity.this, "Left!");
+                FoodImage mFoodImage = (FoodImage) dataObject;
+                String foodType = mFoodImage.getFoodType();
+                makeToast(MainActivity.this, "Left: " + foodType);
 			}
 
 			@Override
 			public void onRightCardExit(Object dataObject)
 			{
-				makeToast(MainActivity.this, "Right!");// + "Add " + (String)dataObject + "to history");
-			}
+				//makeToast(MainActivity.this, "Right!");// + "Add " + (String)dataObject + "to history");
+                FoodImage mFoodImage = (FoodImage) dataObject;
+                String foodType = mFoodImage.getFoodType();
+                makeToast(MainActivity.this, "Right: " + foodType);
+            }
 
 			@Override
 			public void onAdapterAboutToEmpty(int itemsInAdapter)
 			{
 				// Ask for more data here
-				array_image.add(imageDefault);
+				array_image.add(fImage4);
 				arrayPicAdapter.notifyDataSetChanged();
 				Log.d("LIST", "notified");
 				i++;
