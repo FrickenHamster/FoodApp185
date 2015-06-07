@@ -99,7 +99,7 @@ public class MainActivity extends Activity
 			@Override
 			public void onRightCardExit(Object dataObject)
 			{
-				makeToast(MainActivity.this, "Right!" + "Add " + (String)dataObject + "to history");
+				makeToast(MainActivity.this, "Right!");// + "Add " + (String)dataObject + "to history");
 			}
 
 			@Override

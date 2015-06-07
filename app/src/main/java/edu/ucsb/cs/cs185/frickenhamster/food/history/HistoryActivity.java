@@ -6,7 +6,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +41,7 @@ public class HistoryActivity extends Activity {
         myDataset.add("Hamburger");
         myDataset.add("Hamburger");
         myDataset.add("Pizza");
-        myDataset.add("Chinese");
+        myDataset.add("Pancakes");
         myDataset.add("Pizza");
 
         mAdapter = new HistoryAdapter(this, myDataset);

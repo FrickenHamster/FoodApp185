@@ -1,10 +1,14 @@
 package edu.ucsb.cs.cs185.frickenhamster.food.history;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -22,6 +26,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         public TextView myFoodTypeView;
         public TextView myRestaurantNameView;
         public TextView myDateView;
+        public ImageView myPhotoView;
         public Context context;
         final HistoryActivity historyActivity;
 
@@ -30,6 +35,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
             myFoodTypeView = (TextView) v.findViewById(R.id.food_type);
             myRestaurantNameView = (TextView) v.findViewById(R.id.restaurant_name);
             myDateView = (TextView) v.findViewById(R.id.date);
+            myPhotoView = (ImageView) v.findViewById(R.id.photo);
 
             this.context = context;
             this.historyActivity = activity;
@@ -67,6 +73,27 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         holder.myFoodTypeView.setText(myDataset.get(position));
         holder.myRestaurantNameView.setText("Restaurant name goes here");
         holder.myDateView.setText("Date goes here");
+
+        if (myDataset.get(position).equals("Hamburger")) {
+            Drawable myDrawable = holder.context.getResources().getDrawable(R.drawable.image1);
+            Bitmap image = ((BitmapDrawable) myDrawable).getBitmap();
+            holder.myPhotoView.setImageBitmap(image);
+        }
+        else if (myDataset.get(position).equals("Pizza")) {
+            Drawable myDrawable = holder.context.getResources().getDrawable(R.drawable.image2);
+            Bitmap image = ((BitmapDrawable) myDrawable).getBitmap();
+            holder.myPhotoView.setImageBitmap(image);
+        }
+        else if (myDataset.get(position).equals("Steak")) {
+            Drawable myDrawable = holder.context.getResources().getDrawable(R.drawable.image3);
+            Bitmap image = ((BitmapDrawable) myDrawable).getBitmap();
+            holder.myPhotoView.setImageBitmap(image);
+        }
+        else if (myDataset.get(position).equals("Pancakes")) {
+            Drawable myDrawable = holder.context.getResources().getDrawable(R.drawable.image4);
+            Bitmap image = ((BitmapDrawable) myDrawable).getBitmap();
+            holder.myPhotoView.setImageBitmap(image);
+        }
         //Picasso.with(holder.context).load(myDataset.get(position)).resize(800, 400).centerCrop().into(holder.myImageView);
 
         //holder.currentPhoto = myDataset.get(position);
