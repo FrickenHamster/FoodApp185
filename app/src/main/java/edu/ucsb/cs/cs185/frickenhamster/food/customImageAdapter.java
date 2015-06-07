@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import edu.ucsb.cs.cs185.frickenhamster.food.restaurants.FoodImage;
+import edu.ucsb.cs.cs185.frickenhamster.food.FoodImage;
 
 public class CustomImageAdapter extends ArrayAdapter<FoodImage> {
     private final Context context;

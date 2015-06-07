@@ -22,8 +22,8 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import edu.ucsb.cs.cs185.frickenhamster.food.history.HistoryActivity;
-import edu.ucsb.cs.cs185.frickenhamster.food.restaurants.*;
-import edu.ucsb.cs.cs185.frickenhamster.food.restaurants.FoodImage;
+import edu.ucsb.cs.cs185.frickenhamster.food.FoodImage;
+import edu.ucsb.cs.cs185.frickenhamster.food.restaurants.RestaurantsActivity;
 
 
 public class MainActivity extends Activity
@@ -40,13 +40,15 @@ public class MainActivity extends Activity
 	@InjectView(R.id.frame)
 	SwipeFlingAdapterView flingContainer;
     private FoodImage fImage4;
+    private Intent intent;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
+
+        intent = new Intent(this, RestaurantsActivity.class);
 		//startActivity(new Intent(this, RestaurantsActivity.class));
 		
 		ButterKnife.inject(this);
@@ -119,6 +121,7 @@ public class MainActivity extends Activity
                 FoodImage mFoodImage = (FoodImage) dataObject;
                 String foodType = mFoodImage.getFoodType();
                 makeToast(MainActivity.this, "Right: " + foodType);
+                startActivity(intent);
             }
 
 			@Override
