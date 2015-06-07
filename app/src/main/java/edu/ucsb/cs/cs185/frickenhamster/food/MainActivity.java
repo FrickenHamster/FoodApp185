@@ -16,6 +16,12 @@ import android.widget.Toast;
 
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
+import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import butterknife.ButterKnife;
@@ -75,6 +81,28 @@ public class MainActivity extends Activity
 		//array_image.add(R.drawable.image4);
 
 		arrayPicAdapter = new customImageAdapter(this, array_image);
+
+        //temporarily creating the fake history file
+        boolean exists = false;
+        for (String file : fileList()) {
+            if (file == "history.txt") exists = true;
+        }
+        if (!exists) {
+            PrintWriter writer = null;
+            try {
+                writer = new PrintWriter(new BufferedOutputStream(openFileOutput("history.txt", MODE_PRIVATE)));
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            if (writer != null) {
+                writer.println("Pizza---Woodstocks---Tuesday, June 2nd, 2015");
+                writer.println("Pizza---Woodstocks---Wednesday, June 3rd, 2015");
+                writer.println("Hamburger---The Habit---Thursday, June 4th, 2015");
+                writer.println("Steak---Outback Steakhouse---Thursday, June 6th, 2015");
+                writer.println("Pancakes---Denny's---Thursday, June 7th, 2015");
+            }
+            writer.close();
+        }
 
 
 		//CUSTOM ADAPTER

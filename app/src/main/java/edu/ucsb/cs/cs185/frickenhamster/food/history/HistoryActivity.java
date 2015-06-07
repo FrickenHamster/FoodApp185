@@ -3,14 +3,24 @@ package edu.ucsb.cs.cs185.frickenhamster.food.history;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.ucsb.cs.cs185.frickenhamster.food.FoodOrder;
 import edu.ucsb.cs.cs185.frickenhamster.food.R;
 
 /**
@@ -20,7 +30,7 @@ public class HistoryActivity extends Activity {
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private List<String> myDataset;
+    private List<FoodOrder> myDataset;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,12 +48,29 @@ public class HistoryActivity extends Activity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        myDataset = new ArrayList<String>();
-        myDataset.add("Hamburger");
-        myDataset.add("Hamburger");
-        myDataset.add("Pizza");
-        myDataset.add("Pancakes");
-        myDataset.add("Pizza");
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new InputStreamReader(openFileInput("history.txt")));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        myDataset = new ArrayList<FoodOrder>();
+        String line;
+        if (reader == null) return;
+        try {
+            while ((line = reader.readLine()) != null) {
+                myDataset.add(new FoodOrder(line));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         mAdapter = new HistoryAdapter(this, myDataset);
         mRecyclerView.setAdapter(mAdapter);
