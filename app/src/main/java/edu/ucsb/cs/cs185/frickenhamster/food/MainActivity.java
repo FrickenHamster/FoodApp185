@@ -1,7 +1,7 @@
 package edu.ucsb.cs.cs185.frickenhamster.food;
 
 import android.app.Activity;
-import android.content.Context;
+import android.content.*;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import edu.ucsb.cs.cs185.frickenhamster.food.restaurants.*;
 
 
 public class MainActivity extends Activity
@@ -40,7 +41,9 @@ public class MainActivity extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		Log.d("gay", "wtf");
+		
+		startActivity(new Intent(this, RestaurantsActivity.class));
+		
 		ButterKnife.inject(this);
 
 		myDrawableDefault = getResources().getDrawable(R.drawable.image4);
