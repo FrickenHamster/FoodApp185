@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.widget.*;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.*;
+import com.squareup.picasso.*;
 import edu.ucsb.cs.cs185.frickenhamster.food.*;
 
 
@@ -13,6 +15,7 @@ public class RestaurantsActivity extends Activity
 
 	private RecyclerView recyclerView;
 	private RestaurantAdapter restaurantAdapter;
+	private LinearLayoutManager restaurantLayoutManager;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -21,8 +24,12 @@ public class RestaurantsActivity extends Activity
 		setContentView(R.layout.activity_restaurants);
 		
 		recyclerView = (RecyclerView) findViewById(R.id.restaurant_recycler_view);
-		restaurantAdapter = new RestaurantAdapter();
+		restaurantLayoutManager = new LinearLayoutManager(this);
+		restaurantLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+		restaurantAdapter = new RestaurantAdapter(this);
+		recyclerView.setLayoutManager(restaurantLayoutManager);
 		recyclerView.setAdapter(restaurantAdapter);
+
 		
 	}
 
