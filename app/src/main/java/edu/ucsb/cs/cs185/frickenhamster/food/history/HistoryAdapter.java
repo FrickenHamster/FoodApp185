@@ -70,6 +70,8 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
 
+        // later, get all of this information from an
+        // ArrayList<FoodOrder> called myDataset
         holder.myFoodTypeView.setText(myDataset.get(position));
         holder.myRestaurantNameView.setText("Restaurant name goes here");
         holder.myDateView.setText("Date goes here");

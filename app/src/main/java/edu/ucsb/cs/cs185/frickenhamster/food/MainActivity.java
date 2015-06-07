@@ -46,7 +46,7 @@ public class MainActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		startActivity(new Intent(this, RestaurantsActivity.class));
+		//startActivity(new Intent(this, RestaurantsActivity.class));
 		
 		ButterKnife.inject(this);
 
