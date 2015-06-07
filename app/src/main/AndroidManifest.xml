@@ -18,7 +18,17 @@
         </activity>
         <activity
             android:name=".restaurants.RestaurantsActivity"
-            android:label="@string/title_activity_restaurants" >
+            android:label="@string/title_activity_restaurants"
+            android:parentActivityName=".MainActivity" >
+        </activity>
+        <activity
+            android:name=".history.HistoryActivity"
+            android:label="@string/title_activity_history"
+            android:parentActivityName=".MainActivity" >
+        </activity>
+        <activity
+            android:name=".history.HistoryAdapter"
+            android:label="@string/title_activity_history_adapter" >
         </activity>
     </application>
 

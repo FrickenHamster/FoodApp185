@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="primary" type="color">#FFC107</item>
+    <item name="primary_dark" type="color">#FFA000</item>
+    <item name="primary_pressed" type="color">#FF8F00</item>
+
+</resources>
