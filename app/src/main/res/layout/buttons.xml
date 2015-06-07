@@ -10,15 +10,17 @@
     <Button
         android:id="@+id/left"
         android:layout_margin="10dp"
-        android:text="Disike"
+        android:text="@string/dislike"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    <!--android:background="@color/primary"-->
 
     <Button
         android:id="@+id/right"
         android:layout_margin="10dp"
-        android:text="Like"
+        android:text="@string/like"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    <!--android:background="@color/primary"-->
 
 </LinearLayout>

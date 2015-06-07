@@ -19,7 +19,18 @@
         </activity>
         <activity
             android:name=".restaurants.RestaurantsActivity"
-            android:label="@string/title_activity_restaurants" >
+            android:label="@string/title_activity_restaurants"
+            android:parentActivityName=".MainActivity" >
+        </activity>
+        <activity
+            android:name=".history.HistoryActivity"
+            android:label="@string/title_activity_history"
+            android:parentActivityName=".MainActivity" >
+        </activity>
+        <activity
+            android:name=".history.VisualizeActivity"
+            android:label="@string/title_activity_visualize"
+            android:parentActivityName=".history.HistoryActivity" >
         </activity>
     </application>
 
