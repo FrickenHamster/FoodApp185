@@ -37,12 +37,15 @@ import edu.ucsb.cs.cs185.frickenhamster.food.R;
  * Created by Dario on 6/62015.
  */
 public class VisualizeActivity extends Activity {
+    int days;
+    ArrayList<FoodOrder> dataSet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualize);
 //        GraphView graph = (GraphView) findViewById(R.id.graph);
+        days = -1;
 
         BufferedReader reader = null;
         try {
@@ -51,7 +54,7 @@ public class VisualizeActivity extends Activity {
             e.printStackTrace();
         }
 
-        ArrayList<FoodOrder> dataSet = new ArrayList<FoodOrder>();
+        dataSet = new ArrayList<FoodOrder>();
         String line;
 
         if (reader == null) return;
@@ -88,71 +91,7 @@ public class VisualizeActivity extends Activity {
             }
         }
 
-
-//        BarGraphSeries<DataPoint> series = new BarGraphSeries<DataPoint>(new DataPoint[] {
-//                new DataPoint(0, 0),
-//                new DataPoint(1, data[0]),
-//                new DataPoint(2, data[1]),
-//                new DataPoint(3, data[2]),
-//                new DataPoint(4, data[3]),
-//                new DataPoint(5, data[4])
-//        });
-//
-//        series.setValueDependentColor(new ValueDependentColor<DataPoint>() {
-//            @Override
-//            public int get(DataPoint data) {
-//                switch ((int)data.getX()) {
-//                    case (1): return Color.DKGRAY;
-//                    case (2): return Color.RED;
-//                    case (3): return Color.BLUE;
-//                    case (4): return Color.LTGRAY;
-//                    default: return Color.BLACK;
-//                }
-//            }
-//        });
-//
-//        series.setSpacing(5);
-//
-//        Viewport axis = graph.getViewport();
-//        axis.setXAxisBoundsManual(true);
-//        axis.setMinX(0);
-//        axis.setMaxX(5);
-//
-//        GridLabelRenderer grid = graph.getGridLabelRenderer();
-//        grid.setHorizontalLabelsVisible(false);
-//        grid.setVerticalLabelsVisible(true);
-//        grid.setGridStyle(GridLabelRenderer.GridStyle.NONE);
-//
-//        StaticLabelsFormatter formatter = new StaticLabelsFormatter(graph,labels, null);
-//
-//        graph.getLegendRenderer().setVisible(true);
-//
-//
-//        graph.addSeries(series);
-
-        BarChart chart = (BarChart) findViewById(R.id.chart);
-        String[] labels = new String[]{"Hamburger", "Pizza", "Steak", "Pancakes"};
-
-        ArrayList<BarEntry> entries = new ArrayList<BarEntry>();
-        for (int i = 0; i < 4; i++) {
-            BarEntry entry = new BarEntry(data[i], i);
-            entries.add(entry);
-        }
-        BarDataSet barDataSet = new BarDataSet(entries, "Food Types");
-        int[] colors = new int[]{getResources().getColor(R.color.primary), getResources().getColor(R.color.primary_dark), getResources().getColor(R.color.primary_pressed)};
-        barDataSet.setColors(colors);
-        BarData barData = new BarData(labels, barDataSet);
-        chart.setData(barData);
-        chart.setDrawValueAboveBar(true);
-        chart.getAxisRight().setDrawAxisLine(false);
-        chart.getAxisRight().setDrawGridLines(false);
-        chart.getAxisRight().setDrawLabels(false);
-        chart.getAxisLeft().setDrawGridLines(false);
-        chart.getAxisLeft().setShowOnlyMinMax(true);
-        chart.getXAxis().setDrawGridLines(false);
-
-
-
+        drawGraph();
     }
 
     @Override
@@ -175,5 +114,97 @@ public class VisualizeActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void drawGraph() {
+
+        int[] data = new int[5];
+        if (days == -1) {
+            for (FoodOrder order: dataSet) {
+                if (order.type.compareTo("Hamburger") == 0) {
+                    data[0]++;
+                }
+                else if (order.type.compareTo("Pizza") == 0) {
+                    data[1]++;
+                }
+                else if (order.type.compareTo("Steak") == 0) {
+                    data[2]++;
+                }
+                else if (order.type.compareTo("Pancakes") == 0) {
+                    data[3]++;
+                }
+                else {
+                    data[4]++;
+                }
+            }
+        }
+        else {
+            //need to compare date string to date
+            for (FoodOrder order: dataSet) {
+                if (order.type.compareTo("Hamburger") == 0) {
+                    data[0]++;
+                }
+                else if (order.type.compareTo("Pizza") == 0) {
+                    data[1]++;
+                }
+                else if (order.type.compareTo("Steak") == 0) {
+                    data[2]++;
+                }
+                else if (order.type.compareTo("Pancakes") == 0) {
+                    data[3]++;
+                }
+                else {
+                    data[4]++;
+                }
+            }
+        }
+
+        BarChart chart = (BarChart) findViewById(R.id.chart);
+        String[] labels = new String[]{"Hamburger", "Pizza", "Steak", "Pancakes"};
+
+        ArrayList<BarEntry> entries = new ArrayList<BarEntry>();
+        int maxVal = 0;
+        for (int i = 0; i < 4; i++) {
+            BarEntry entry = new BarEntry(data[i], i);
+            entries.add(entry);
+            if (data[i] > maxVal)
+                maxVal = data[i];
+        }
+        BarDataSet barDataSet = new BarDataSet(entries, "Food Types");
+        int[] colors = new int[]{getResources().getColor(R.color.hamburger), getResources().getColor(R.color.pizza), getResources().getColor(R.color.steak), getResources().getColor(R.color.pancakes)};
+        barDataSet.setColors(colors);
+        BarData barData = new BarData(labels, barDataSet);
+        chart.setData(barData);
+        chart.setDrawValueAboveBar(true);
+        chart.getAxisRight().setDrawAxisLine(false);
+        chart.getAxisRight().setDrawGridLines(false);
+        chart.getAxisRight().setDrawLabels(false);
+        chart.getAxisLeft().setDrawGridLines(false);
+        chart.getAxisLeft().setAxisMaxValue(maxVal + 1);
+        chart.getAxisRight().setAxisMaxValue(maxVal + 1);
+        chart.getAxisLeft().setShowOnlyMinMax(true);
+        chart.getXAxis().setDrawGridLines(false);
+        chart.setDescription("");
+    }
+
+
+    public void allTime(MenuItem item) {
+        days = -1;
+        drawGraph();
+    }
+
+    public void set1month(MenuItem item) {
+        days = 30;
+        drawGraph();
+    }
+
+    public void set2weeks(MenuItem item) {
+        days = 14;
+        drawGraph();
+    }
+
+    public void set7days(MenuItem item) {
+        days = 7;
+        drawGraph();
     }
 }
