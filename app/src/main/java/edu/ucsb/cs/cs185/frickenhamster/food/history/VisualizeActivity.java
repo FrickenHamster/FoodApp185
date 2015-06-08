@@ -6,10 +6,19 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.utils.FillFormatter;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.GridLabelRenderer;
 import com.jjoe64.graphview.ValueDependentColor;
 import com.jjoe64.graphview.Viewport;
+import com.jjoe64.graphview.helper.StaticLabelsFormatter;
 import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
@@ -19,6 +28,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 
 import edu.ucsb.cs.cs185.frickenhamster.food.FoodOrder;
 import edu.ucsb.cs.cs185.frickenhamster.food.R;
@@ -32,7 +42,7 @@ public class VisualizeActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_visualize);
-        GraphView graph = (GraphView) findViewById(R.id.graph);
+//        GraphView graph = (GraphView) findViewById(R.id.graph);
 
         BufferedReader reader = null;
         try {
@@ -77,41 +87,72 @@ public class VisualizeActivity extends Activity {
                 data[4]++;
             }
         }
-        BarGraphSeries<DataPoint> series = new BarGraphSeries<DataPoint>(new DataPoint[] {
-                new DataPoint(0, 0),
-                new DataPoint(1, data[0]),
-                new DataPoint(2, data[1]),
-                new DataPoint(3, data[2]),
-                new DataPoint(4, data[3]),
-                new DataPoint(5, data[4])
-        });
 
-        series.setValueDependentColor(new ValueDependentColor<DataPoint>() {
-            @Override
-            public int get(DataPoint data) {
-                switch ((int)data.getX()) {
-                    case (1): return Color.DKGRAY;
-                    case (2): return Color.RED;
-                    case (3): return Color.BLUE;
-                    case (4): return Color.LTGRAY;
-                    default: return Color.BLACK;
-                }
-            }
-        });
 
-        series.setSpacing(5);
+//        BarGraphSeries<DataPoint> series = new BarGraphSeries<DataPoint>(new DataPoint[] {
+//                new DataPoint(0, 0),
+//                new DataPoint(1, data[0]),
+//                new DataPoint(2, data[1]),
+//                new DataPoint(3, data[2]),
+//                new DataPoint(4, data[3]),
+//                new DataPoint(5, data[4])
+//        });
+//
+//        series.setValueDependentColor(new ValueDependentColor<DataPoint>() {
+//            @Override
+//            public int get(DataPoint data) {
+//                switch ((int)data.getX()) {
+//                    case (1): return Color.DKGRAY;
+//                    case (2): return Color.RED;
+//                    case (3): return Color.BLUE;
+//                    case (4): return Color.LTGRAY;
+//                    default: return Color.BLACK;
+//                }
+//            }
+//        });
+//
+//        series.setSpacing(5);
+//
+//        Viewport axis = graph.getViewport();
+//        axis.setXAxisBoundsManual(true);
+//        axis.setMinX(0);
+//        axis.setMaxX(5);
+//
+//        GridLabelRenderer grid = graph.getGridLabelRenderer();
+//        grid.setHorizontalLabelsVisible(false);
+//        grid.setVerticalLabelsVisible(true);
+//        grid.setGridStyle(GridLabelRenderer.GridStyle.NONE);
+//
+//        StaticLabelsFormatter formatter = new StaticLabelsFormatter(graph,labels, null);
+//
+//        graph.getLegendRenderer().setVisible(true);
+//
+//
+//        graph.addSeries(series);
 
-        Viewport axis = graph.getViewport();
-        axis.setXAxisBoundsManual(true);
-        axis.setMinX(0);
-        axis.setMaxX(5);
+        BarChart chart = (BarChart) findViewById(R.id.chart);
+        String[] labels = new String[]{"Hamburger", "Pizza", "Steak", "Pancakes"};
 
-        GridLabelRenderer grid = graph.getGridLabelRenderer();
-        grid.setHorizontalLabelsVisible(false);
-        grid.setVerticalLabelsVisible(true);
-        grid.setGridStyle(GridLabelRenderer.GridStyle.NONE);
+        ArrayList<BarEntry> entries = new ArrayList<BarEntry>();
+        for (int i = 0; i < 4; i++) {
+            BarEntry entry = new BarEntry(data[i], i);
+            entries.add(entry);
+        }
+        BarDataSet barDataSet = new BarDataSet(entries, "Food Types");
+        int[] colors = new int[]{getResources().getColor(R.color.primary), getResources().getColor(R.color.primary_dark), getResources().getColor(R.color.primary_pressed)};
+        barDataSet.setColors(colors);
+        BarData barData = new BarData(labels, barDataSet);
+        chart.setData(barData);
+        chart.setDrawValueAboveBar(true);
+        chart.getAxisRight().setDrawAxisLine(false);
+        chart.getAxisRight().setDrawGridLines(false);
+        chart.getAxisRight().setDrawLabels(false);
+        chart.getAxisLeft().setDrawGridLines(false);
+        chart.getAxisLeft().setShowOnlyMinMax(true);
+        chart.getXAxis().setDrawGridLines(false);
 
-        graph.addSeries(series);
+
+
     }
 
     @Override
