@@ -72,24 +72,6 @@ public class VisualizeActivity extends Activity {
             e.printStackTrace();
         }
 
-        int[] data = new int[5];
-        for (FoodOrder order: dataSet) {
-            if (order.type.compareTo("Hamburger") == 0) {
-                data[0]++;
-            }
-            else if (order.type.compareTo("Pizza") == 0) {
-                data[1]++;
-            }
-            else if (order.type.compareTo("Steak") == 0) {
-                data[2]++;
-            }
-            else if (order.type.compareTo("Pancakes") == 0) {
-                data[3]++;
-            }
-            else {
-                data[4]++;
-            }
-        }
 
         drawGraph();
     }
@@ -118,49 +100,74 @@ public class VisualizeActivity extends Activity {
 
     public void drawGraph() {
 
-        int[] data = new int[5];
+        int[] data = new int[9];
         if (days == -1) {
             for (FoodOrder order: dataSet) {
-                if (order.type.compareTo("Hamburger") == 0) {
+                if (order.type.compareTo("coffee") == 0) {
                     data[0]++;
                 }
-                else if (order.type.compareTo("Pizza") == 0) {
+                else if (order.type.compareTo("bbq") == 0) {
                     data[1]++;
                 }
-                else if (order.type.compareTo("Steak") == 0) {
+                else if (order.type.compareTo("burger") == 0) {
                     data[2]++;
                 }
-                else if (order.type.compareTo("Pancakes") == 0) {
+                else if (order.type.compareTo("salad") == 0) {
                     data[3]++;
                 }
-                else {
+                else if (order.type.compareTo("bagels") == 0) {
                     data[4]++;
+                }
+                else if (order.type.compareTo("donuts") == 0) {
+                    data[5]++;
+                }
+                else if (order.type.compareTo("sushi") == 0) {
+                    data[6]++;
+                }
+                else if (order.type.compareTo("pizza") == 0) {
+                    data[7]++;
+                }
+                else {
+                    data[8]++;
                 }
             }
         }
         else {
             //need to compare date string to date
             for (FoodOrder order: dataSet) {
-                if (order.type.compareTo("Hamburger") == 0) {
+                int daysOld = daysOld(order);
+                if (order.type.compareTo("coffee") == 0) {
                     data[0]++;
                 }
-                else if (order.type.compareTo("Pizza") == 0) {
+                else if (order.type.compareTo("bbq") == 0) {
                     data[1]++;
                 }
-                else if (order.type.compareTo("Steak") == 0) {
+                else if (order.type.compareTo("burger") == 0) {
                     data[2]++;
                 }
-                else if (order.type.compareTo("Pancakes") == 0) {
+                else if (order.type.compareTo("salad") == 0) {
                     data[3]++;
                 }
-                else {
+                else if (order.type.compareTo("bagels") == 0) {
                     data[4]++;
+                }
+                else if (order.type.compareTo("donuts") == 0) {
+                    data[5]++;
+                }
+                else if (order.type.compareTo("sushi") == 0) {
+                    data[6]++;
+                }
+                else if (order.type.compareTo("pizza") == 0) {
+                    data[7]++;
+                }
+                else {
+                    data[8]++;
                 }
             }
         }
 
         BarChart chart = (BarChart) findViewById(R.id.chart);
-        String[] labels = new String[]{"Hamburger", "Pizza", "Steak", "Pancakes"};
+        String[] labels = new String[]{"coffee", "bbq", "burger", "salad", "bagels", "donuts", "sushi", "pizza"};
 
         ArrayList<BarEntry> entries = new ArrayList<BarEntry>();
         int maxVal = 0;
@@ -206,5 +213,31 @@ public class VisualizeActivity extends Activity {
     public void set7days(MenuItem item) {
         days = 7;
         drawGraph();
+    }
+
+    private int daysOld(FoodOrder order) {
+//        DateTime date = new DateTime();
+
+
+        String[] dateString = order.date.split(",");
+        if (dateString.length < 2) {
+            System.out.println("date parsing failed, date=" + order.date);
+            return 0;
+        }
+        String[] monthDay = dateString[1].split(" ");
+        String month, day, year;
+        if (dateString.length >= 3 && monthDay.length >= 3) {
+            month = monthDay[1];
+            day = monthDay[2];
+            year = dateString[2].split(" ")[1];
+        }
+        else {
+            System.out.println("date parsing failed, date=" + order.date);
+            return 0;
+        }
+        System.out.println(order.date);
+        System.out.println("I think the date of this order is {" + month + "/" + day + "/" + year + "}");
+
+        return 0;
     }
 }
