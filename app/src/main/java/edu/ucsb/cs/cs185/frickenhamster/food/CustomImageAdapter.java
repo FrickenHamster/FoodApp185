@@ -29,7 +29,7 @@ public class CustomImageAdapter extends ArrayAdapter<FoodImage> {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View rowView = inflater.inflate(R.layout.imageitem, parent, false);
-        TextView textView = (TextView) rowView.findViewById(R.id.label);
+
         ImageView imageView = (ImageView) rowView.findViewById(R.id.logo);
         imageView.setImageBitmap(values.get(position).getFoodBitmap());
         return rowView;

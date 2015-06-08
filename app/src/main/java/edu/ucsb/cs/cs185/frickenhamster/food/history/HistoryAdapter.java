@@ -77,23 +77,43 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         holder.myRestaurantNameView.setText(myDataset.get(position).restaurant);
         holder.myDateView.setText(myDataset.get(position).date);
 
-        if (myDataset.get(position).type.equals("Hamburger")) {
-            Drawable myDrawable = holder.context.getResources().getDrawable(R.drawable.image1);
+        if (myDataset.get(position).type.equals("coffee")) {
+            Drawable myDrawable = holder.context.getResources().getDrawable(R.drawable.caje_coffee);
             Bitmap image = ((BitmapDrawable) myDrawable).getBitmap();
             holder.myPhotoView.setImageBitmap(image);
         }
-        else if (myDataset.get(position).type.equals("Pizza")) {
-            Drawable myDrawable = holder.context.getResources().getDrawable(R.drawable.image2);
+        else if (myDataset.get(position).type.equals("bbq")) {
+            Drawable myDrawable = holder.context.getResources().getDrawable(R.drawable.captains_bbq);
             Bitmap image = ((BitmapDrawable) myDrawable).getBitmap();
             holder.myPhotoView.setImageBitmap(image);
         }
-        else if (myDataset.get(position).type.equals("Steak")) {
-            Drawable myDrawable = holder.context.getResources().getDrawable(R.drawable.image3);
+        else if (myDataset.get(position).type.equals("burger")) {
+            Drawable myDrawable = holder.context.getResources().getDrawable(R.drawable.habit_burger);
             Bitmap image = ((BitmapDrawable) myDrawable).getBitmap();
             holder.myPhotoView.setImageBitmap(image);
         }
-        else if (myDataset.get(position).type.equals("Pancakes")) {
-            Drawable myDrawable = holder.context.getResources().getDrawable(R.drawable.image4);
+        else if (myDataset.get(position).type.equals("salad")) {
+            Drawable myDrawable = holder.context.getResources().getDrawable(R.drawable.silvergreens_salad);
+            Bitmap image = ((BitmapDrawable) myDrawable).getBitmap();
+            holder.myPhotoView.setImageBitmap(image);
+        }
+        else if (myDataset.get(position).type.equals("bagels")) {
+            Drawable myDrawable = holder.context.getResources().getDrawable(R.drawable.spudnuts_bagels);
+            Bitmap image = ((BitmapDrawable) myDrawable).getBitmap();
+            holder.myPhotoView.setImageBitmap(image);
+        }
+        else if (myDataset.get(position).type.equals("donuts")) {
+            Drawable myDrawable = holder.context.getResources().getDrawable(R.drawable.spudnuts_donuts);
+            Bitmap image = ((BitmapDrawable) myDrawable).getBitmap();
+            holder.myPhotoView.setImageBitmap(image);
+        }
+        else if (myDataset.get(position).type.equals("sushi")) {
+            Drawable myDrawable = holder.context.getResources().getDrawable(R.drawable.sushiya_sushi);
+            Bitmap image = ((BitmapDrawable) myDrawable).getBitmap();
+            holder.myPhotoView.setImageBitmap(image);
+        }
+        else if (myDataset.get(position).type.equals("pizza")) {
+            Drawable myDrawable = holder.context.getResources().getDrawable(R.drawable.woodstocks_pizza);
             Bitmap image = ((BitmapDrawable) myDrawable).getBitmap();
             holder.myPhotoView.setImageBitmap(image);
         }
