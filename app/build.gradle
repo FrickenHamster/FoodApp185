@@ -10,6 +10,7 @@ apply plugin: 'com.android.application'
 
 repositories {
     jcenter()
+    maven { url "https://jitpack.io" }
 }
 
 android {
@@ -47,5 +48,7 @@ dependencies {
     compile 'com.lorentzos.swipecards:library:1.0.8'
     compile 'com.jakewharton:butterknife:6.1.0'
     compile 'com.jjoe64:graphview:4.0.1'
-    compile files('C:/Users/Jon/AndroidStudioProjects/FoodApp185/libs/mpandroidchartlibrary-2-1-0.jar')
+    compile 'com.github.PhilJay:MPAndroidChart:v2.1.0'
+
+
 }
