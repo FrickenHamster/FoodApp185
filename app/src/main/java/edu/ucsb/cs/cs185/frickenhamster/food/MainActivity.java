@@ -7,22 +7,29 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -55,11 +62,20 @@ public class MainActivity extends Activity {
     
     private Context mainContext = this;
 
+    //for sidebar menu
+    private String[] listItems;
+    //private String[] historyListItems;
+    private ArrayList<String> historyListItems;
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+    private ListView mDrawerHistoryList;
+    private LinearLayout mDrawer;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		//setContentView(R.layout.activity_main);
+        setContentView(R.layout.drawer_layout);
 		
 		//startActivity(new Intent(this, RestaurantsActivity.class));
 		PrefDialog dialog = new PrefDialog();
@@ -202,6 +218,53 @@ public class MainActivity extends Activity {
 			}
 		});
 
+
+        // Initialize Drawer List
+        listItems = new String[2];
+        listItems[0] = "Preferenes";
+        listItems[1] = "History";
+        //initialize history list
+        historyListItems = new ArrayList<String>();
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new InputStreamReader(openFileInput("history.txt")));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        String line;
+        if (reader == null) return;
+        try {
+            while ((line = reader.readLine()) != null) {
+                FoodOrder item = new FoodOrder(line);
+                historyListItems.add(item.type + "\n" + item.restaurant + "\n" + item.date);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Collections.reverse(historyListItems);
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawer = (LinearLayout) findViewById(R.id.drawer_linearlayout);
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        mDrawerHistoryList = (ListView) findViewById(R.id.left_drawer_history);
+
+        //View itemView = getLayoutInflater().inflate(R.layout.drawer_layout, , false);
+
+        // Set the adapter for the menu list view
+        mDrawerList.setAdapter(new ArrayAdapter<String>(this,
+                R.layout.drawer_list_item_layout, R.id.list_item_name, listItems));
+        // Set the adapter for the history list view
+        mDrawerHistoryList.setAdapter(new ArrayAdapter<String>(this,
+                R.layout.drawer_history_list_item, R.id.list_item_name, historyListItems));
+        // Set the list's click listener
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+        //mDrawerHistoryList.setOnItemClickListener(new DrawerItemClickListener());
+        //mDrawerFrame.setOnItemClickListener(new DrawerItemClickListener());
 	}
 
 	static void makeToast(Context ctx, String s)
@@ -250,5 +313,23 @@ public class MainActivity extends Activity {
     void launchHistoryActivity() {
         Intent intent = new Intent(this, HistoryActivity.class);
         startActivity(intent);
+    }
+
+    void launchPreferences() {
+
+    }
+
+    // handle clicks in the side bar menu
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView parent, View view, int position, long id) {
+            switch (position) {
+                case 0:
+                    launchPreferences();
+                    break;
+                case 1:
+                    launchHistoryActivity();
+            }
+        }
     }
 }
