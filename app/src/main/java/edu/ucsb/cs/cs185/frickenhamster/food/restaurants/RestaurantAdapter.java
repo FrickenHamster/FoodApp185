@@ -93,7 +93,10 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
                 public void onClick(View v) {
                     Intent intent = new Intent(Intent.ACTION_VIEW);
                     intent.setData(Uri.parse("http://www.yelp.com/search?find_desc=" + foodType));
-                    saveOrder(foodType, "Yelp", "idk when");
+
+                    Calendar orderDate = new GregorianCalendar();
+                    String orderDateString = formatDate(orderDate);
+                    saveOrder(foodType, "Yelp", orderDateString);
                     context.startActivity(intent);
                 }
             });
