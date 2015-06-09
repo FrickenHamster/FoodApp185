@@ -4,6 +4,7 @@ import android.app.*;
 import android.content.*;
 import android.os.*;
 import android.support.v7.widget.*;
+import android.util.*;
 import android.view.*;
 import edu.ucsb.cs.cs185.frickenhamster.food.*;
 
@@ -35,8 +36,9 @@ public class PrefDialog extends DialogFragment
 		
 		recyclerView = (RecyclerView) v.findViewById(R.id.pref_recycler_view);
 		
-		FoodApplication app = (FoodApplication) getActivity().getApplicationContext();
-		adapter = new PrefAdapter(app.getFoodManager().getCuisineList());
+		final FoodApplication app = (FoodApplication) getActivity().getApplicationContext();
+		final FoodManager foodManager = app.getFoodManager();
+		adapter = new PrefAdapter(foodManager.getCuisineList());
 		LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
 		recyclerView.setLayoutManager(layoutManager);
 		recyclerView.setAdapter(adapter);
@@ -48,7 +50,8 @@ public class PrefDialog extends DialogFragment
 			@Override
 			public void onClick(DialogInterface dialog, int which)
 			{
-				
+				foodManager.rebuildAllowedFoods();
+				Log.d("kawaii", foodManager.getRandomFood().getName());
 			}
 		});
 		

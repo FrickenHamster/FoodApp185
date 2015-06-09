@@ -16,7 +16,8 @@ public class FoodApplication extends Application
 	public void onCreate()
 	{
 		super.onCreate();
-		foodManager = new FoodManager();
+		
+		foodManager = new FoodManager(getApplicationContext());
 	}
 
 	public FoodManager getFoodManager()

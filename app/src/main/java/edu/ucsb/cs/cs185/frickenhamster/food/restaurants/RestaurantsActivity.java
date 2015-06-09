@@ -30,7 +30,7 @@ public class RestaurantsActivity extends Activity {
         recyclerView = (RecyclerView) findViewById(R.id.restaurant_recycler_view);
         restaurantLayoutManager = new LinearLayoutManager(this);
         restaurantLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        restaurantAdapter = new RestaurantAdapter(this, foodType);
+        restaurantAdapter = new RestaurantAdapter(this);
         recyclerView.setLayoutManager(restaurantLayoutManager);
         recyclerView.setAdapter(restaurantAdapter);
 

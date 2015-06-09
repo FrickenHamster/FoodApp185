@@ -11,13 +11,12 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import edu.ucsb.cs.cs185.frickenhamster.food.FoodImage;
 
-public class CustomImageAdapter extends ArrayAdapter<FoodImage> {
+public class CustomImageAdapter extends ArrayAdapter<Food> {
     private final Context context;
-    private final ArrayList<FoodImage> values;
+    private final ArrayList<Food> values;
 
-    public CustomImageAdapter(Context context, ArrayList<FoodImage> values){
+    public CustomImageAdapter(Context context, ArrayList<Food> values){
         super(context, R.layout.imageitem, values);
         this.context = context;
         this.values = values;
@@ -31,7 +30,7 @@ public class CustomImageAdapter extends ArrayAdapter<FoodImage> {
         View rowView = inflater.inflate(R.layout.imageitem, parent, false);
 
         ImageView imageView = (ImageView) rowView.findViewById(R.id.logo);
-        imageView.setImageBitmap(values.get(position).getFoodBitmap());
+        imageView.setImageBitmap(values.get(position).getImage());
         return rowView;
     }
 }

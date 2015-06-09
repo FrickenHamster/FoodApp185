@@ -1,5 +1,9 @@
 package edu.ucsb.cs.cs185.frickenhamster.food;
 
+import android.content.*;
+import android.graphics.*;
+import android.graphics.drawable.*;
+
 import java.util.*;
 
 /**
@@ -15,13 +19,22 @@ public class FoodManager
 	
 	private ArrayList<Food> allowedFoods;
 
+	private Context context;
+	
+	private Food selected;
 
-	public FoodManager()
+	public FoodManager(Context context)
 	{
+		this.context = context;
+		
 		allowedFoods = new ArrayList<Food>();
 		cuisines = new HashMap<String, Cuisine>();
 
-		addFood("Pizza", "American");
+		Food food;
+		food = addFood("Pizza", "Italian", R.drawable.woodstocks_pizza);
+		food.addRestaurant("Woodstock's Pizza", "http://www.yelp.com/biz/woodstocks-pizza-isla-vista-2", "http://s3-media1.fl.yelpcdn.com/bphoto/MqngpKj1_2KjhdIoJqYAAw/l.jpg");
+		
+		/*addFood("Pizza", "American");
 		addFood("Boiled Brocolli", "Kawaii");
 		addFood("Hamburger", "American");
 		addFood("Cheeseburger", "American");
@@ -29,11 +42,11 @@ public class FoodManager
 		addFood("Ramen", "Japanese");
 		addFood("Curry Rice", "Japanese");
 		addFood("Burrito", "Mexican");
-		addFood("Tacos", "Mexican");
+		addFood("Tacos", "Mexican");*/
 	}
 
 
-	public void addFood(String foodName, String cuisineName)
+	public Food addFood(String foodName, String cuisineName, int drawable)
 	{
 		Cuisine cc = cuisines.get(cuisineName);
 
@@ -43,12 +56,22 @@ public class FoodManager
 			cuisines.put(cuisineName, cc);
 		}
 
-		Food food = new Food(foodName);
+		Drawable myDrawable = context.getResources().getDrawable(drawable);
+		Bitmap image = ((BitmapDrawable) myDrawable).getBitmap();
+		Food food = new Food(foodName, image, cc);
 		cc.addFood(food);
 		if (cc.isAllowed())
 		{
 			allowedFoods.add(food);
 		}
+		
+		return food;
+	}
+	
+	public Food getRandomFood()
+	{
+		int nn = (int)(Math.random() * allowedFoods.size());
+		return allowedFoods.get(nn);
 	}
 	
 	public void allowCuisine(String cuisineName)
@@ -80,6 +103,16 @@ public class FoodManager
 				}
 			}
 		}
+	}
+	
+	public void selectFood(Food food)
+	{
+		selected = food;
+	}
+
+	public Food getSelectedFood()
+	{
+		return selected;
 	}
 
 	public ArrayList<Cuisine> getCuisineList()

@@ -37,29 +37,22 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import edu.ucsb.cs.cs185.frickenhamster.food.history.HistoryActivity;
-import edu.ucsb.cs.cs185.frickenhamster.food.FoodImage;
 import edu.ucsb.cs.cs185.frickenhamster.food.pref.*;
 import edu.ucsb.cs.cs185.frickenhamster.food.restaurants.*;
 
 
 public class MainActivity extends Activity {
     public final static String FOOD_TYPE = "edu.ucsb.cs.cs185.frickenhamster.food.FOOD_TYPE";
+	
+	public final static int GET_NUM = 5;
 
-    private ArrayList<FoodImage> array_image;
+    private ArrayList<Food> array_image;
 
     private ArrayAdapter<String> arrayAdapter;
     private CustomImageAdapter arrayPicAdapter;
     private int i;
     @InjectView(R.id.frame)
     SwipeFlingAdapterView flingContainer;
-    private FoodImage fImage1;
-    private FoodImage fImage2;
-    private FoodImage fImage3;
-    private FoodImage fImage4;
-    private FoodImage fImage5;
-    private FoodImage fImage6;
-    private FoodImage fImage7;
-    private FoodImage fImage8;
     private Intent intent;
     
     private Context mainContext = this;
@@ -76,6 +69,8 @@ public class MainActivity extends Activity {
     private ActionBarDrawerToggle mDrawerToggle;
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
+	
+	private FoodManager foodManager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -85,8 +80,8 @@ public class MainActivity extends Activity {
 		
 		ButterKnife.inject(this);
 
-		array_image = new ArrayList<FoodImage>();
-		Drawable myDrawable = getResources().getDrawable(R.drawable.caje_coffee);
+		array_image = new ArrayList<Food>();
+		/*Drawable myDrawable = getResources().getDrawable(R.drawable.caje_coffee);
 		Bitmap image1 = ((BitmapDrawable) myDrawable).getBitmap();
 		fImage1 = new FoodImage(image1, "coffee");
         array_image.add(fImage1);
@@ -124,7 +119,15 @@ public class MainActivity extends Activity {
         Drawable myDrawable8 = getResources().getDrawable(R.drawable.woodstocks_pizza);
         Bitmap image8 = ((BitmapDrawable) myDrawable8).getBitmap();
         fImage8 = new FoodImage(image8, "salad");
-        array_image.add(fImage8);
+        array_image.add(fImage8);*/
+
+		FoodApplication app = (FoodApplication) getApplicationContext();
+		foodManager = app.getFoodManager();
+		
+		for (int j = 0; j < GET_NUM; j++)
+		{
+			array_image.add(foodManager.getRandomFood());
+		}
 
         arrayPicAdapter = new CustomImageAdapter(this, array_image);
 
@@ -170,18 +173,18 @@ public class MainActivity extends Activity {
 				//Do something on the left!
 				//You also have access to the original object.
 				//If you want to use it just cast it (String) dataObject
-                FoodImage mFoodImage = (FoodImage) dataObject;
-                String foodType = mFoodImage.getFoodType();
+                Food mFoodImage = (Food) dataObject;
+                //String foodType = mFoodImage.get();
 
 			}
 
 			@Override
 			public void onRightCardExit(Object dataObject) {
-                FoodImage mFoodImage = (FoodImage) dataObject;
-                String foodType = mFoodImage.getFoodType();
+                Food mFoodImage = (Food) dataObject;
+                //String foodType = mFoodImage.getFoodType();
 
                 intent = new Intent(mainContext, RestaurantsActivity.class);
-                intent.putExtra(FOOD_TYPE, foodType);
+                foodManager.selectFood(mFoodImage);
                 startActivity(intent);
 			}
 
@@ -189,14 +192,14 @@ public class MainActivity extends Activity {
 			public void onAdapterAboutToEmpty(int itemsInAdapter)
 			{
 				// Ask for more data here
-                array_image.add(fImage1);
+                /*array_image.add(fImage1);
                 array_image.add(fImage2);
                 array_image.add(fImage3);
 				array_image.add(fImage4);
                 array_image.add(fImage5);
                 array_image.add(fImage6);
                 array_image.add(fImage7);
-                array_image.add(fImage8);
+                array_image.add(fImage8);*/
 				arrayPicAdapter.notifyDataSetChanged();
 				Log.d("LIST", "notified");
 				i++;
