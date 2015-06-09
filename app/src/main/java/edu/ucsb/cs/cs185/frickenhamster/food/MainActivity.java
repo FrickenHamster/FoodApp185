@@ -83,10 +83,6 @@ public class MainActivity extends Activity {
 		//setContentView(R.layout.activity_main);
         setContentView(R.layout.drawer_layout);
 		
-		//startActivity(new Intent(this, RestaurantsActivity.class));
-		PrefDialog dialog = new PrefDialog();
-		dialog.show(getFragmentManager(), "Pref Pick");
-		
 		ButterKnife.inject(this);
 
 		array_image = new ArrayList<FoodImage>();
@@ -367,7 +363,8 @@ public class MainActivity extends Activity {
     }
 
     void launchPreferences() {
-
+        PrefDialog dialog = new PrefDialog();
+        dialog.show(getFragmentManager(), "Pref Pick");
     }
 
     // handle clicks in the side bar menu
