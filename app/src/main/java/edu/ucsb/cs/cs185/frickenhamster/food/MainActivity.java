@@ -141,11 +141,11 @@ public class MainActivity extends Activity {
                 e.printStackTrace();
             }
             if (writer != null) {
-                writer.println("Pizza---Woodstocks---Tuesday, June 2nd, 2015");
-                writer.println("Pizza---Woodstocks---Wednesday, June 3rd, 2015");
-                writer.println("Hamburger---The Habit---Thursday, June 4th, 2015");
-                writer.println("Steak---Outback Steakhouse---Thursday, June 6th, 2015");
-                writer.println("Pancakes---Denny's---Thursday, June 7th, 2015");
+                writer.println("Pizza---Woodstocks---Tuesday, June 2, 2015");
+                writer.println("Pizza---Woodstocks---Wednesday, June 3, 2015");
+                writer.println("Hamburger---The Habit---Thursday, June 4, 2015");
+                writer.println("Steak---Outback Steakhouse---Thursday, June 6, 2015");
+                writer.println("Pancakes---Denny's---Thursday, June 7, 2015");
             }
             writer.close();
         }
@@ -253,28 +253,29 @@ public class MainActivity extends Activity {
 
         mTitle = mDrawerTitle = getTitle();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerToggle = new ActionBarDrawerToggle(
-                this,                  /* host Activity */
-                mDrawerLayout,         /* DrawerLayout object */
-                R.drawable.ic_drawer,  /* nav drawer icon to replace 'Up' caret */
-                R.string.drawer_open,  /* "open drawer" description */
-                R.string.drawer_close  /* "close drawer" description */
-                ) {
-            /** Called when a drawer has settled in a completely closed state. */
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-                getActionBar().setTitle(mTitle);
-            }
 
-            /** Called when a drawer has settled in a completely open state. */
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                getActionBar().setTitle(mDrawerTitle);
-            }
-        };
+        //mDrawerToggle = new ActionBarDrawerToggle(
+        //        this,                  /* host Activity */
+        //        mDrawerLayout,         /* DrawerLayout object */
+        //        R.drawable.ic_drawer,  /* nav drawer icon to replace 'Up' caret */
+        //        R.string.drawer_open,  /* "open drawer" description */
+        //        R.string.drawer_close  /* "close drawer" description */
+        //        ) {
+        //    /** Called when a drawer has settled in a completely closed state. */
+        //    public void onDrawerClosed(View view) {
+        //        super.onDrawerClosed(view);
+        //        getActionBar().setTitle(mTitle);
+        //    }
+        //
+        //    /** Called when a drawer has settled in a completely open state. */
+        //    public void onDrawerOpened(View drawerView) {
+        //        super.onDrawerOpened(drawerView);
+        //        getActionBar().setTitle(mDrawerTitle);
+        //    }
+        //};
 
         // Set the drawer toggle as the DrawerListener
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        //mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
@@ -337,9 +338,9 @@ public class MainActivity extends Activity {
 
         // Pass the event to ActionBarDrawerToggle, if it returns
         // true, then it has handled the app icon touch event
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
+        //if (mDrawerToggle.onOptionsItemSelected(item)) {
+        //    return true;
+        //}
         // Handle your other action bar items...
         return super.onOptionsItemSelected(item);
     }
@@ -348,13 +349,13 @@ public class MainActivity extends Activity {
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
-        mDrawerToggle.syncState();
+        //mDrawerToggle.syncState();
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        mDrawerToggle.onConfigurationChanged(newConfig);
+        //mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
     void launchHistoryActivity() {
