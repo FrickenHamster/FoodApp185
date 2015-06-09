@@ -24,6 +24,7 @@ import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -31,6 +32,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -141,10 +143,16 @@ public class MainActivity extends Activity
 		arrayPicAdapter = new CustomImageAdapter(this, array_image);
 
 		//temporarily creating the fake history file
-		/*boolean exists = false;
+		boolean exists = false;
         for (String file : fileList()) {
-            if (file == "history.txt") exists = true;
+            if (file.compareTo("history.txt") == 0) exists = true;
         }
+
+        File myFile = new File ("history.txt");
+        if (myFile.exists()) {
+            exists = true;
+        }
+
         if (!exists) {
             PrintWriter writer = null;
             try {
@@ -153,15 +161,17 @@ public class MainActivity extends Activity
                 e.printStackTrace();
             }
             if (writer != null) {
-                writer.println("Pizza---Woodstocks---Tuesday, June 2nd, 2015");
-                writer.println("Pizza---Woodstocks---Wednesday, June 3rd, 2015");
-                writer.println("Hamburger---The Habit---Thursday, June 4th, 2015");
-                writer.println("Steak---Outback Steakhouse---Thursday, June 6th, 2015");
-                writer.println("Pancakes---Denny's---Thursday, June 7th, 2015");
+                String[] dates = new String[]{"Thursday, April 2, 2015", "Monday, May 4, 2015", "Friday, May 26, 2015", "Monday, June 1, 2015", "Friday, June 5, 2015"};
+                Random random = new Random();
+                for (int i = 0; i < 5; i++) {
+                    Cuisine type = cuisines.get(random.nextInt(cuisines.size()));
+                    Food food = type.getFoods().get(random.nextInt(type.getFoods().size()));
+                    Restaurant restaurant = food.getRestaurants().get(random.nextInt(food.getRestaurants().size()));
+                    writer.println(food.getName() + "---" + restaurant.getName() + "---" + dates[random.nextInt(dates.length)]);
+                }
+                writer.close();
             }
-            writer.close();
         }
-        */
 
 		//CUSTOM ADAPTER
 		flingContainer.setAdapter(arrayPicAdapter);

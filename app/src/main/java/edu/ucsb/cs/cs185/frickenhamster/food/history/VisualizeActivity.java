@@ -49,6 +49,7 @@ import edu.ucsb.cs.cs185.frickenhamster.food.R;
 public class VisualizeActivity extends Activity {
     int days;
     ArrayList<FoodOrder> dataSet;
+    boolean firstTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +84,8 @@ public class VisualizeActivity extends Activity {
         }
 
 
+        firstTime = true;
+
         drawGraph();
     }
 
@@ -113,73 +116,18 @@ public class VisualizeActivity extends Activity {
         int[] data = new int[9];
         HashMap<String, Integer> dataMap = new HashMap<String, Integer>();
         if (days == -1) {
-            for (FoodOrder order: dataSet) {
+            for (FoodOrder order : dataSet) {
                 if (dataMap.containsKey(order.type)) {
                     dataMap.put(order.type, dataMap.get(order.type) + 1);
-                }
-                else {
+                } else {
                     dataMap.put(order.type, 1);
                 }
-//                if (order.type.compareTo("coffee") == 0) {
-//                    data[0]++;
-//                }
-//                else if (order.type.compareTo("bbq") == 0) {
-//                    data[1]++;
-//                }
-//                else if (order.type.compareTo("burger") == 0) {
-//                    data[2]++;
-//                }
-//                else if (order.type.compareTo("salad") == 0) {
-//                    data[3]++;
-//                }
-//                else if (order.type.compareTo("bagels") == 0) {
-//                    data[4]++;
-//                }
-//                else if (order.type.compareTo("donuts") == 0) {
-//                    data[5]++;
-//                }
-//                else if (order.type.compareTo("sushi") == 0) {
-//                    data[6]++;
-//                }
-//                else if (order.type.compareTo("pizza") == 0) {
-//                    data[7]++;
-//                }
-//                else {
-//                    data[8]++;
-//                }
             }
-        }
-        else {
+        } else {
             //need to compare date string to date
-            for (FoodOrder order: dataSet) {
+            for (FoodOrder order : dataSet) {
                 int daysOld = daysOld(order);
-//                if (order.type.compareTo("coffee") == 0) {
-//                    data[0]++;
-//                }
-//                else if (order.type.compareTo("bbq") == 0) {
-//                    data[1]++;
-//                }
-//                else if (order.type.compareTo("burger") == 0) {
-//                    data[2]++;
-//                }
-//                else if (order.type.compareTo("salad") == 0) {
-//                    data[3]++;
-//                }
-//                else if (order.type.compareTo("bagels") == 0) {
-//                    data[4]++;
-//                }
-//                else if (order.type.compareTo("donuts") == 0) {
-//                    data[5]++;
-//                }
-//                else if (order.type.compareTo("sushi") == 0) {
-//                    data[6]++;
-//                }
-//                else if (order.type.compareTo("pizza") == 0) {
-//                    data[7]++;
-//                }
-//                else {
-//                    data[8]++;
-//                }
+
                 if (daysOld < days) {
                     if (dataMap.containsKey(order.type)) {
                         dataMap.put(order.type, dataMap.get(order.type) + 1);
@@ -217,26 +165,31 @@ public class VisualizeActivity extends Activity {
         barDataSet.setValueTextSize(16f);
         BarData barData = new BarData(labels, barDataSet);
         barData.setValueTextSize(16f);
+        if (firstTime) {
+            chart.getAxisLeft().setAxisMaxValue(maxVal + 1);
+            chart.getAxisRight().setAxisMaxValue(maxVal + 1);
+            chart.setDrawValueAboveBar(true);
+            chart.setDrawValuesForWholeStack(true);
+            chart.getAxisRight().setDrawAxisLine(false);
+            chart.getAxisRight().setDrawGridLines(false);
+            chart.getAxisRight().setDrawLabels(false);
+            chart.getAxisLeft().setDrawGridLines(false);
+            chart.getAxisLeft().setShowOnlyMinMax(true);
+            chart.getXAxis().setDrawGridLines(false);
+            chart.getXAxis().setDrawAxisLine(true);
+            chart.getXAxis().setTextSize(12f);
+            chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+            chart.getAxisLeft().setTextSize(16f);
+            chart.setDescription("");
+            chart.setVisibleXRange(4);
+            chart.setHorizontalScrollBarEnabled(true);
+            chart.setDescriptionTextSize(16f);
+            chart.getLegend().setTextSize(16f);
+            firstTime = false;
+        }
+
         chart.setData(barData);
-        chart.setDrawValueAboveBar(true);
-        chart.setDrawValuesForWholeStack(true);
-        chart.getAxisRight().setDrawAxisLine(false);
-        chart.getAxisRight().setDrawGridLines(false);
-        chart.getAxisRight().setDrawLabels(false);
-        chart.getAxisLeft().setDrawGridLines(false);
-        chart.getAxisLeft().setAxisMaxValue(maxVal + 1);
-        chart.getAxisRight().setAxisMaxValue(maxVal + 1);
-        chart.getAxisLeft().setShowOnlyMinMax(true);
-        chart.getXAxis().setDrawGridLines(false);
-        chart.getXAxis().setDrawAxisLine(true);
-        chart.getXAxis().setTextSize(14f);
-        chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
-        chart.getAxisLeft().setTextSize(16f);
-        chart.setDescription("");
-        chart.setVisibleXRange(4);
-        chart.setHorizontalScrollBarEnabled(true);
-        chart.setDescriptionTextSize(16f);
-        chart.getLegend().setTextSize(16f);
+        chart.invalidate();
     }
 
 
