@@ -3,6 +3,8 @@ package edu.ucsb.cs.cs185.frickenhamster.food;
 import android.content.*;
 import android.graphics.*;
 import android.graphics.drawable.*;
+import android.preference.*;
+import android.util.*;
 
 import java.util.*;
 
@@ -21,6 +23,8 @@ public class FoodManager
 
 	private Context context;
 	
+	private SharedPreferences sharedPref;
+	
 	private Food selected;
     private int lastRandom;
 
@@ -34,6 +38,8 @@ public class FoodManager
 		Food food;
 		food = addFood("Pizza", "Italian", R.drawable.woodstocks_pizza);
 		food.addRestaurant("Woodstock's Pizza", "http://www.yelp.com/biz/woodstocks-pizza-isla-vista-2", "http://s3-media1.fl.yelpcdn.com/bphoto/MqngpKj1_2KjhdIoJqYAAw/l.jpg");
+		food.addRestaurant("Giovanni's Pizza", "http://www.yelp.com/biz/giovannis-pizza-santa-barbara-2", "http://s3-media1.fl.yelpcdn.com/bphoto/VFi1QEu58gFN5tCQr7RPFQ/l.jpg");
+		
         food.addRestaurant("Pizza My Heart", "http://www.yelp.com/biz/pizza-my-heart-isla-vista", "https://s-media-cache-ak0.pinimg.com/originals/51/2e/5c/512e5c37a0a1a8b7d66e988722f0bfa1.jpg");
         food.addRestaurant("Giovanni's", "http://www.yelp.com/biz/giovannis-isla-vista-isla-vista", "http://s3-media3.fl.yelpcdn.com/bphoto/sb26f20lEKLzffZh1XOzlg/l.jpg");
         food.addRestaurant("Blaze Pizza", "www.yelp.com/biz/blaze-fast-fired-pizza-isla-vista", "http://s3-media3.fl.yelpcdn.com/bphoto/GgZXLVZ98z5HSGtmsIrzLw/l.jpg");
@@ -98,6 +104,14 @@ public class FoodManager
         food = addFood("Sushi", "Japanese", R.drawable.sushiya_sushi);
         food.addRestaurant("Sushiya Express", "http://www.yelp.com/biz/sushiya-express-goleta-2", "https://www.santabarbara.com/dining/photos/sushiya-1.jpg");
 		food.addRestaurant("Goleta Sushi House", "http://www.yelp.com/biz/goleta-sushi-house-goleta", "https://res.cloudinary.com/roadtrippers/image/upload/c_fill,h_316,w_520/v1377120383/goleta-sushi-house-52152f504203c3863b000e3c.jpg");
+
+		sharedPref = PreferenceManager.getDefaultSharedPreferences(context);
+		for (Cuisine cuisine : cuisines.values())
+		{
+			boolean allowed = sharedPref.getBoolean("pref" + cuisine.getName(), true);
+			Log.d("uguu", "pref" + cuisine.getName() + allowed);
+			cuisine.setAllowed(allowed);
+		}
         food.addRestaurant("Arigato Sushi", "http://www.yelp.com/biz/arigato-sushi-santa-barbara", "http://s3-media4.fl.yelpcdn.com/bphoto/5A6f5ZIO1L1vA3Ge4AkNQw/l.jpg");
         food.addRestaurant("Miso Hungry", "http://www.yelp.com/biz/miso-hungry-santa-barbara", "http://s3-media1.fl.yelpcdn.com/bphoto/Rdz4W4uxLMCdEEKw-pt8Xg/l.jpg");
         food.addRestaurant("Kyoto", "http://www.yelp.com/biz/kyoto-santa-barbara", "http://s3-media4.fl.yelpcdn.com/bphoto/Lx0qwB25MARCeJ05s6UIEg/l.jpg");
@@ -149,6 +163,11 @@ public class FoodManager
 		if (cuisine == null)
 			return;
 		cuisine.setAllowed(true);
+		SharedPreferences.Editor edit = sharedPref.edit();
+		Log.d("uguu", "allow");
+		edit.putBoolean("pref" + cuisine.getName(), true);
+		edit.commit();
+		
 	}
 	
 	public void disallowCuisine(String cuisineName)
@@ -157,6 +176,10 @@ public class FoodManager
 		if (cuisine == null)
 			return;
 		cuisine.setAllowed(false);
+		SharedPreferences.Editor edit = sharedPref.edit();
+		Log.d("uguu", "disallow");
+		edit.putBoolean("pref" + cuisine.getName(), false);
+		edit.commit();
 	}
 	
 	public void rebuildAllowedFoods()

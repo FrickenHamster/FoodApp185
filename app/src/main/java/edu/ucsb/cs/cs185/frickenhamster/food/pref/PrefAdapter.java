@@ -1,5 +1,6 @@
 package edu.ucsb.cs.cs185.frickenhamster.food.pref;
 
+import android.content.*;
 import android.support.v7.widget.*;
 import android.text.*;
 import android.util.*;
@@ -35,10 +36,18 @@ public class PrefAdapter extends RecyclerView.Adapter<PrefAdapter.PrefViewHolder
 	}
 	
 	private ArrayList<Cuisine> cuisines;
+	
+	private FoodManager foodManager;
 
 	public PrefAdapter(ArrayList<Cuisine> cuisines)
 	{
 		this.cuisines = cuisines;
+	}
+
+	public PrefAdapter(ArrayList<Cuisine> cuisines, FoodManager foodManager)
+	{
+		this.cuisines = cuisines;
+		this.foodManager = foodManager;
 	}
 
 	@Override
@@ -46,6 +55,8 @@ public class PrefAdapter extends RecyclerView.Adapter<PrefAdapter.PrefViewHolder
 	{
 		View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.pref_item, parent, false);
 		PrefViewHolder vh = new PrefViewHolder(v);
+		
+		
 		return vh;
 	}
 
@@ -59,19 +70,26 @@ public class PrefAdapter extends RecyclerView.Adapter<PrefAdapter.PrefViewHolder
 			holder.checkBox.setChecked(true);
 		}
 		
+		
 		holder.view.setOnClickListener(new View.OnClickListener()
 		{
 			@Override
 			public void onClick(View v)
 			{
+				 
+				
 				if (cuisine.isAllowed())
 				{
-					cuisine.setAllowed(false);
+					
+					//cuisine.setAllowed(false);
+					foodManager.disallowCuisine(cuisine.getName());
 					holder.checkBox.setChecked(false);
+					
 				}
 				else
 				{
-					cuisine.setAllowed(true);
+//					cuisine.setAllowed(true);
+					foodManager.allowCuisine(cuisine.getName());
 					holder.checkBox.setChecked(true);
 				}
 				notifyDataSetChanged();

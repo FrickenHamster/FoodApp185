@@ -1,8 +1,7 @@
 package edu.ucsb.cs.cs185.frickenhamster.food;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
+import android.content.*;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -41,44 +40,56 @@ import edu.ucsb.cs.cs185.frickenhamster.food.pref.*;
 import edu.ucsb.cs.cs185.frickenhamster.food.restaurants.*;
 
 
-public class MainActivity extends Activity {
-    public final static String FOOD_TYPE = "edu.ucsb.cs.cs185.frickenhamster.food.FOOD_TYPE";
-	
+public class MainActivity extends Activity
+{
+	public final static String FOOD_TYPE = "edu.ucsb.cs.cs185.frickenhamster.food.FOOD_TYPE";
+
 	public final static int GET_NUM = 2;
 
-    private ArrayList<Food> array_image;
+	private ArrayList<Food> array_image;
 
-    private ArrayAdapter<String> arrayAdapter;
-    private CustomImageAdapter arrayPicAdapter;
-    private int i;
-    @InjectView(R.id.frame)
-    SwipeFlingAdapterView flingContainer;
-    private Intent intent;
-    
-    private Context mainContext = this;
+	private ArrayAdapter<String> arrayAdapter;
+	private CustomImageAdapter arrayPicAdapter;
+	@InjectView(R.id.frame)
+	SwipeFlingAdapterView flingContainer;
+	private Intent intent;
 
-    //for sidebar menu
-    private String[] listItems;
-    //private String[] historyListItems;
-    private ArrayList<String> historyListItems;
-    private DrawerLayout mDrawerLayout;
-    private ListView mDrawerList;
-    private ListView mDrawerHistoryList;
-    private LinearLayout mDrawer;
+	private Context mainContext = this;
 
-    private ActionBarDrawerToggle mDrawerToggle;
-    private CharSequence mDrawerTitle;
-    private CharSequence mTitle;
-	
+	//for sidebar menu
+	private String[] listItems;
+	//private String[] historyListItems;
+	private ArrayList<String> historyListItems;
+	private DrawerLayout mDrawerLayout;
+	private ListView mDrawerList;
+	private ListView mDrawerHistoryList;
+	private LinearLayout mDrawer;
+
+	private ActionBarDrawerToggle mDrawerToggle;
+	private CharSequence mDrawerTitle;
+	private CharSequence mTitle;
+
 	private FoodManager foodManager;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState)
+	{
 		super.onCreate(savedInstanceState);
 		//setContentView(R.layout.activity_main);
-        setContentView(R.layout.drawer_layout);
+		setContentView(R.layout.drawer_layout);
+		
+		System.gc();
 		
 		ButterKnife.inject(this);
+
+
+		FoodApplication app = (FoodApplication) getApplicationContext();
+		foodManager = app.getFoodManager();
+
+		SharedPreferences pref = getPreferences(MODE_PRIVATE);
+		ArrayList<Cuisine> cuisines = foodManager.getCuisineList();
+		
+
 
 		array_image = new ArrayList<Food>();
 		/*Drawable myDrawable = getResources().getDrawable(R.drawable.caje_coffee);
@@ -121,18 +132,16 @@ public class MainActivity extends Activity {
         fImage8 = new FoodImage(image8, "salad");
         array_image.add(fImage8);*/
 
-		FoodApplication app = (FoodApplication) getApplicationContext();
-		foodManager = app.getFoodManager();
-		
+
 		for (int j = 0; j < GET_NUM; j++)
 		{
 			array_image.add(foodManager.getRandomFood());
 		}
 
-        arrayPicAdapter = new CustomImageAdapter(this, array_image);
+		arrayPicAdapter = new CustomImageAdapter(this, array_image);
 
-        //temporarily creating the fake history file
-        /*boolean exists = false;
+		//temporarily creating the fake history file
+		/*boolean exists = false;
         for (String file : fileList()) {
             if (file == "history.txt") exists = true;
         }
@@ -173,19 +182,20 @@ public class MainActivity extends Activity {
 				//Do something on the left!
 				//You also have access to the original object.
 				//If you want to use it just cast it (String) dataObject
-                array_image.add(foodManager.getRandomFood());
-                arrayPicAdapter.notifyDataSetChanged();
+				array_image.add(foodManager.getRandomFood());
+				arrayPicAdapter.notifyDataSetChanged();
 			}
 
 			@Override
-			public void onRightCardExit(Object dataObject) {
-                Food mFoodImage = (Food) dataObject;
-                array_image.add(foodManager.getRandomFood());
-                arrayPicAdapter.notifyDataSetChanged();
+			public void onRightCardExit(Object dataObject)
+			{
+				Food mFoodImage = (Food) dataObject;
+				array_image.add(foodManager.getRandomFood());
+				arrayPicAdapter.notifyDataSetChanged();
 
-                intent = new Intent(mainContext, RestaurantsActivity.class);
-                foodManager.selectFood(mFoodImage);
-                startActivity(intent);
+				intent = new Intent(mainContext, RestaurantsActivity.class);
+				foodManager.selectFood(mFoodImage);
+				startActivity(intent);
 			}
 
 			@Override
@@ -200,9 +210,12 @@ public class MainActivity extends Activity {
                 array_image.add(fImage6);
                 array_image.add(fImage7);
                 array_image.add(fImage8);*/
+				for (int j = 0; j < GET_NUM; j++)
+				{
+					array_image.add(foodManager.getRandomFood());
+				}
 				arrayPicAdapter.notifyDataSetChanged();
 				Log.d("LIST", "notified");
-				i++;
 			}
 
 			@Override
@@ -216,45 +229,54 @@ public class MainActivity extends Activity {
 
 
 		// Optionally add an OnItemClickListener
-		flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
+		flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener()
+		{
 			@Override
-			public void onItemClicked(int itemPosition, Object dataObject) {
+			public void onItemClicked(int itemPosition, Object dataObject)
+			{
 
 			}
 		});
 
-        // sidebar stuff
+		// sidebar stuff
 
-        // Initialize Drawer List
-        listItems = new String[2];
-        listItems[0] = "Preferenes";
-        listItems[1] = "History";
-        //initialize history list
-        historyListItems = new ArrayList<String>();
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(new InputStreamReader(openFileInput("history.txt")));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        String line;
-        if (reader == null) return;
-        try {
-            while ((line = reader.readLine()) != null) {
-                FoodOrder item = new FoodOrder(line);
-                historyListItems.add(item.type + "\n" + item.restaurant + "\n" + item.date);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Collections.reverse(historyListItems);
+		// Initialize Drawer List
+		listItems = new String[2];
+		listItems[0] = "Preferenes";
+		listItems[1] = "History";
+		//initialize history list
+		historyListItems = new ArrayList<String>();
+		BufferedReader reader = null;
+		try
+		{
+			reader = new BufferedReader(new InputStreamReader(openFileInput("history.txt")));
+		} catch (FileNotFoundException e)
+		{
+			e.printStackTrace();
+		}
+		String line;
+		if (reader == null) return;
+		try
+		{
+			while ((line = reader.readLine()) != null)
+			{
+				FoodOrder item = new FoodOrder(line);
+				historyListItems.add(item.type + "\n" + item.restaurant + "\n" + item.date);
+			}
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		try
+		{
+			reader.close();
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		Collections.reverse(historyListItems);
 
-        mTitle = mDrawerTitle = getTitle();
+		mTitle = mDrawerTitle = getTitle();
 //        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 //        mDrawerToggle = new ActionBarDrawerToggle(
 //                this,                  /* host Activity */
@@ -319,112 +341,126 @@ public class MainActivity extends Activity {
 	}
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu)
+	{
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.menu_main, menu);
+		return true;
+	}
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		// Handle action bar item clicks here. The action bar will
+		// automatically handle clicks on the Home/Up button, so long
+		// as you specify a parent activity in AndroidManifest.xml.
+		int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_history) {
-            launchHistoryActivity();
-        }
+		//noinspection SimplifiableIfStatement
+		if (id == R.id.action_history)
+		{
+			launchHistoryActivity();
+		}
 
-        // Pass the event to ActionBarDrawerToggle, if it returns
-        // true, then it has handled the app icon touch event
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-        // Handle your other action bar items...
-        return super.onOptionsItemSelected(item);
-    }
+		// Pass the event to ActionBarDrawerToggle, if it returns
+		// true, then it has handled the app icon touch event
+		if (mDrawerToggle.onOptionsItemSelected(item))
+		{
+			return true;
+		}
+		// Handle your other action bar items...
+		return super.onOptionsItemSelected(item);
+	}
 
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState)
+	{
+		super.onPostCreate(savedInstanceState);
 
-        mTitle = mDrawerTitle = getTitle();
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerToggle = new ActionBarDrawerToggle(
-                this,                  /* host Activity */
-                mDrawerLayout,         /* DrawerLayout object */
-                R.drawable.ic_drawer,  /* nav drawer icon to replace 'Up' caret */
-                R.string.drawer_open,  /* "open drawer" description */
-                R.string.drawer_close  /* "close drawer" description */
-        ) {
-            /** Called when a drawer has settled in a completely closed state. */
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-                getActionBar().setTitle(mTitle);
-            }
+		mTitle = mDrawerTitle = getTitle();
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+		mDrawerToggle = new ActionBarDrawerToggle(
+				this,                  /* host Activity */
+				mDrawerLayout,         /* DrawerLayout object */
+				R.drawable.ic_drawer,  /* nav drawer icon to replace 'Up' caret */
+				R.string.drawer_open,  /* "open drawer" description */
+				R.string.drawer_close  /* "close drawer" description */
+		)
+		{
+			/** Called when a drawer has settled in a completely closed state. */
+			public void onDrawerClosed(View view)
+			{
+				super.onDrawerClosed(view);
+				getActionBar().setTitle(mTitle);
+			}
 
-            /** Called when a drawer has settled in a completely open state. */
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                getActionBar().setTitle(mDrawerTitle);
-            }
-        };
+			/** Called when a drawer has settled in a completely open state. */
+			public void onDrawerOpened(View drawerView)
+			{
+				super.onDrawerOpened(drawerView);
+				getActionBar().setTitle(mDrawerTitle);
+			}
+		};
 
-        // Set the drawer toggle as the DrawerListener
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
+		// Set the drawer toggle as the DrawerListener
+		mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setHomeButtonEnabled(true);
 
-        mDrawer = (LinearLayout) findViewById(R.id.drawer_linearlayout);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        mDrawerHistoryList = (ListView) findViewById(R.id.left_drawer_history);
+		mDrawer = (LinearLayout) findViewById(R.id.drawer_linearlayout);
+		mDrawerList = (ListView) findViewById(R.id.left_drawer);
+		mDrawerHistoryList = (ListView) findViewById(R.id.left_drawer_history);
 
-        // Set the adapter for the menu list view
-        mDrawerList.setAdapter(new ArrayAdapter<String>(this,
-                R.layout.drawer_list_item_layout, R.id.list_item_name, listItems));
-        // Set the adapter for the history list view
-        mDrawerHistoryList.setAdapter(new ArrayAdapter<String>(this,
-                R.layout.drawer_history_list_item, R.id.list_item_name, historyListItems));
-        // Set the list's click listener
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-        //mDrawerHistoryList.setOnItemClickListener(new DrawerItemClickListener());
+		// Set the adapter for the menu list view
+		mDrawerList.setAdapter(new ArrayAdapter<String>(this,
+				R.layout.drawer_list_item_layout, R.id.list_item_name, listItems));
+		// Set the adapter for the history list view
+		mDrawerHistoryList.setAdapter(new ArrayAdapter<String>(this,
+				R.layout.drawer_history_list_item, R.id.list_item_name, historyListItems));
+		// Set the list's click listener
+		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+		//mDrawerHistoryList.setOnItemClickListener(new DrawerItemClickListener());
 
 
-        // Sync the toggle state after onRestoreInstanceState has occurred.
-        mDrawerToggle.syncState();
-    }
+		// Sync the toggle state after onRestoreInstanceState has occurred.
+		mDrawerToggle.syncState();
+	}
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        mDrawerToggle.onConfigurationChanged(newConfig);
-    }
+	@Override
+	public void onConfigurationChanged(Configuration newConfig)
+	{
+		super.onConfigurationChanged(newConfig);
+		mDrawerToggle.onConfigurationChanged(newConfig);
+	}
 
-    void launchHistoryActivity() {
-        Intent intent = new Intent(this, HistoryActivity.class);
-        startActivity(intent);
-    }
+	void launchHistoryActivity()
+	{
+		Intent intent = new Intent(this, HistoryActivity.class);
+		startActivity(intent);
+	}
 
-    void launchPreferences() {
-        PrefDialog dialog = new PrefDialog();
-        dialog.show(getFragmentManager(), "Pref Pick");
-    }
+	void launchPreferences()
+	{
+		PrefDialog dialog = new PrefDialog();
+		dialog.show(getFragmentManager(), "Pref Pick");
+	}
 
-    // handle clicks in the side bar menu
-    private class DrawerItemClickListener implements ListView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView parent, View view, int position, long id) {
-            switch (position) {
-                case 0:
-                    launchPreferences();
-                    break;
-                case 1:
-                    launchHistoryActivity();
-            }
-        }
-    }
+	// handle clicks in the side bar menu
+	private class DrawerItemClickListener implements ListView.OnItemClickListener
+	{
+		@Override
+		public void onItemClick(AdapterView parent, View view, int position, long id)
+		{
+			switch (position)
+			{
+				case 0:
+					launchPreferences();
+					break;
+				case 1:
+					launchHistoryActivity();
+			}
+		}
+	}
 }

@@ -38,7 +38,7 @@ public class PrefDialog extends DialogFragment
 		
 		final FoodApplication app = (FoodApplication) getActivity().getApplicationContext();
 		final FoodManager foodManager = app.getFoodManager();
-		adapter = new PrefAdapter(foodManager.getCuisineList());
+		adapter = new PrefAdapter(foodManager.getCuisineList(), foodManager);
 		LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
 		recyclerView.setLayoutManager(layoutManager);
 		recyclerView.setAdapter(adapter);
