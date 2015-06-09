@@ -181,12 +181,16 @@ public class VisualizeActivity extends Activity {
             chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
             chart.getAxisLeft().setTextSize(16f);
             chart.setDescription("");
-            chart.setVisibleXRange(4);
-            chart.setHorizontalScrollBarEnabled(true);
             chart.setDescriptionTextSize(16f);
             chart.getLegend().setTextSize(16f);
             firstTime = false;
         }
+
+        chart.setData(barData);
+        chart.invalidate();
+
+        chart.setVisibleXRange(4);
+        chart.setHorizontalScrollBarEnabled(true);
 
         chart.setData(barData);
         chart.invalidate();
