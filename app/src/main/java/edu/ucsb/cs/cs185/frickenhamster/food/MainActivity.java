@@ -44,7 +44,7 @@ import edu.ucsb.cs.cs185.frickenhamster.food.restaurants.*;
 public class MainActivity extends Activity {
     public final static String FOOD_TYPE = "edu.ucsb.cs.cs185.frickenhamster.food.FOOD_TYPE";
 	
-	public final static int GET_NUM = 50;
+	public final static int GET_NUM = 2;
 
     private ArrayList<Food> array_image;
 
@@ -173,15 +173,15 @@ public class MainActivity extends Activity {
 				//Do something on the left!
 				//You also have access to the original object.
 				//If you want to use it just cast it (String) dataObject
-                Food mFoodImage = (Food) dataObject;
-                //String foodType = mFoodImage.get();
-
+                array_image.add(foodManager.getRandomFood());
+                arrayPicAdapter.notifyDataSetChanged();
 			}
 
 			@Override
 			public void onRightCardExit(Object dataObject) {
                 Food mFoodImage = (Food) dataObject;
-                //String foodType = mFoodImage.getFoodType();
+                array_image.add(foodManager.getRandomFood());
+                arrayPicAdapter.notifyDataSetChanged();
 
                 intent = new Intent(mainContext, RestaurantsActivity.class);
                 foodManager.selectFood(mFoodImage);

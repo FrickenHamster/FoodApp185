@@ -55,7 +55,7 @@ public class FoodManager
 		food = addFood("Bagel", "American", R.drawable.spudnuts_bagels);
         food.addRestaurant("Spudnuts Donuts", "http://www.yelp.com/biz/spudnuts-donuts-isla-vista", "http://www.dazzleitupevents.com/wp-content/uploads/2014/04/spudnuts.jpg");
 
-        food = addFood("Donut", "American", R.drawable.spudnuts_bagels);
+        food = addFood("Donut", "American", R.drawable.spudnuts_donuts);
         food.addRestaurant("Spudnuts Donuts", "http://www.yelp.com/biz/spudnuts-donuts-isla-vista", "http://www.dazzleitupevents.com/wp-content/uploads/2014/04/spudnuts.jpg");
 
 		food = addFood("Burrito", "Mexican", R.drawable.burrito);
