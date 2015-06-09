@@ -10,6 +10,7 @@
     <string name="title_activity_history">Order History</string>
     <string name="title_activity_history_adapter">HistoryAdapter</string>
     <string name="action_visualize">View History Graph</string>
+    <string name="action_delete_all">Delete All</string>
     <string name="graph_title">Graph of Entire History</string>
     <string name="drawer_open">Open Drawer</string>
     <string name="drawer_close">Close Drawer</string>

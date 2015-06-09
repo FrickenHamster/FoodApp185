@@ -10,12 +10,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -98,11 +100,30 @@ public class HistoryActivity extends Activity {
             visualizeHistory();
         }
 
+        if (id == R.id.action_delete_all) {
+            deleteAll();
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
     void visualizeHistory() {
         Intent intent = new Intent(this, VisualizeActivity.class);
         startActivity(intent);
+    }
+
+    void deleteAll() {
+        PrintWriter writer = null;
+        try {
+            writer = new PrintWriter(new BufferedOutputStream(openFileOutput("history.txt", MODE_PRIVATE)));
+        } catch (FileNotFoundException e) {
+            System.out.println("no history to delete");
+            return;
+        }
+
+        writer.println("");
+        myDataset.clear();
+        mAdapter.notifyDataSetChanged();
+
     }
 }
