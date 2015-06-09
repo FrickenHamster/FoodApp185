@@ -19,7 +19,7 @@ public class Cuisine
 	{
 		this.name = name;
 		foods = new ArrayList<Food>();
-		allowed = false;
+		allowed = true;
 	}
 
 
