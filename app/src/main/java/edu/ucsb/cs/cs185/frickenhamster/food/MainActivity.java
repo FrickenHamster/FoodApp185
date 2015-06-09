@@ -3,10 +3,12 @@ package edu.ucsb.cs.cs185.frickenhamster.food;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
@@ -69,6 +71,10 @@ public class MainActivity extends Activity {
     private ListView mDrawerList;
     private ListView mDrawerHistoryList;
     private LinearLayout mDrawer;
+
+    private ActionBarDrawerToggle mDrawerToggle;
+    private CharSequence mDrawerTitle;
+    private CharSequence mTitle;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -215,6 +221,7 @@ public class MainActivity extends Activity {
 			}
 		});
 
+        // sidebar stuff
 
         // Initialize Drawer List
         listItems = new String[2];
@@ -245,12 +252,37 @@ public class MainActivity extends Activity {
         }
         Collections.reverse(historyListItems);
 
+        mTitle = mDrawerTitle = getTitle();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerToggle = new ActionBarDrawerToggle(
+                this,                  /* host Activity */
+                mDrawerLayout,         /* DrawerLayout object */
+                R.drawable.ic_drawer,  /* nav drawer icon to replace 'Up' caret */
+                R.string.drawer_open,  /* "open drawer" description */
+                R.string.drawer_close  /* "close drawer" description */
+                ) {
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                getActionBar().setTitle(mTitle);
+            }
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                getActionBar().setTitle(mDrawerTitle);
+            }
+        };
+
+        // Set the drawer toggle as the DrawerListener
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+
         mDrawer = (LinearLayout) findViewById(R.id.drawer_linearlayout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
         mDrawerHistoryList = (ListView) findViewById(R.id.left_drawer_history);
-
-        //View itemView = getLayoutInflater().inflate(R.layout.drawer_layout, , false);
 
         // Set the adapter for the menu list view
         mDrawerList.setAdapter(new ArrayAdapter<String>(this,
@@ -261,7 +293,6 @@ public class MainActivity extends Activity {
         // Set the list's click listener
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
         //mDrawerHistoryList.setOnItemClickListener(new DrawerItemClickListener());
-        //mDrawerFrame.setOnItemClickListener(new DrawerItemClickListener());
 	}
 
 	static void makeToast(Context ctx, String s)
@@ -304,7 +335,27 @@ public class MainActivity extends Activity {
         if (id == R.id.action_history) {
             launchHistoryActivity();
         }
+
+        // Pass the event to ActionBarDrawerToggle, if it returns
+        // true, then it has handled the app icon touch event
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        // Handle your other action bar items...
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
     void launchHistoryActivity() {

@@ -11,6 +11,8 @@
     <string name="title_activity_history_adapter">HistoryAdapter</string>
     <string name="action_visualize">View History Graph</string>
     <string name="graph_title">Graph of Entire History</string>
+    <string name="drawer_open">Open Drawer</string>
+    <string name="drawer_close">Close Drawer</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_visualize">Order History</string>
