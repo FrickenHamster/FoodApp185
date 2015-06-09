@@ -260,7 +260,7 @@ public class MainActivity extends Activity {
                 R.layout.drawer_history_list_item, R.id.list_item_name, historyListItems));
         // Set the list's click listener
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-        mDrawerHistoryList.setOnItemClickListener(new DrawerItemClickListener());
+        //mDrawerHistoryList.setOnItemClickListener(new DrawerItemClickListener());
         //mDrawerFrame.setOnItemClickListener(new DrawerItemClickListener());
 	}
 
@@ -312,7 +312,7 @@ public class MainActivity extends Activity {
         startActivity(intent);
     }
 
-    void launchPreferencesActivity() {
+    void launchPreferences() {
 
     }
 
@@ -320,7 +320,13 @@ public class MainActivity extends Activity {
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView parent, View view, int position, long id) {
-            //do stuff
+            switch (position) {
+                case 0:
+                    launchPreferences();
+                    break;
+                case 1:
+                    launchHistoryActivity();
+            }
         }
     }
 }
