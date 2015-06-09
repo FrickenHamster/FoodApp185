@@ -39,15 +39,43 @@ public class FoodManager
         food.addRestaurant("The Habit", "http://www.yelp.com/biz/the-habit-isla-vista", "http://www.habitburger.com/wp-content/themes/habitburger/images/logo-habit.jpg");
         food.addRestaurant("The Krusty Krab", "http://www.yelp.com/biz/the-krusty-krab-portland", "http://d.ibtimes.co.uk/en/full/1385860/actual-krusty-krab.jpg");
 
-		/*addFood("Pizza", "American");
+        food = addFood("Coffee", "American", R.drawable.caje_coffee);
+        food.addRestaurant("Caje", "http://www.yelp.com/biz/caje-isla-vista", "http://1.bp.blogspot.com/-I57oXWaiBW4/U3ppByNtIUI/AAAAAAAAA2o/HXAcIVGSAQs/s1600/caje-coffee.jpg");
+        food.addRestaurant("Coffee Collaborative", "http://www.yelp.com/biz/coffee-collaborative-isla-vista", "https://s-media-cache-ak0.pinimg.com/736x/9e/35/37/9e353772511c0d89c8c2001a2887ada4.jpg");
+
+        food = addFood("Barbecue", "American", R.drawable.captains_bbq);
+        food.addRestaurant("Kaptain’s Firehouse BBQ", "http://www.yelp.com/biz/kaptains-firehouse-bbq-isla-vista", "https://m1.behance.net/rendition/pm/3517159/disp/29a18efe443464e46387676904b37d58.png");
+        food.addRestaurant("Woody's BBQ", "http://www.yelp.com/biz/woodys-bbq-goleta", "http://ifranchisenews.com/wp-content/uploads/2013/01/woodys-bar-b-q-logo-300.jpg");
+
+        food = addFood("Salad", "American", R.drawable.silvergreens_salad);
+        food.addRestaurant("Silvegreens", "http://www.yelp.com/biz/silvergreens-isla-vista", "http://www.silvergreens.com/images/New-Silvergreens-Logo.jpg");
+        food.addRestaurant("South Coast Deli", "http://www.yelp.com/biz/south-coast-deli-isla-vista", "http://www.santabarbara.com/dining/news/wp-content/uploads/2011/10/111017-south-coast-deli.jpg");
+
+		food = addFood("Bagel", "American", R.drawable.spudnuts_bagels);
+        food.addRestaurant("Spudnuts Donuts", "http://www.yelp.com/biz/spudnuts-donuts-isla-vista", "http://www.dazzleitupevents.com/wp-content/uploads/2014/04/spudnuts.jpg");
+
+        food = addFood("Donut", "American", R.drawable.spudnuts_bagels);
+        food.addRestaurant("Spudnuts Donuts", "http://www.yelp.com/biz/spudnuts-donuts-isla-vista", "http://www.dazzleitupevents.com/wp-content/uploads/2014/04/spudnuts.jpg");
+
+		food = addFood("Burrito", "Mexican", R.drawable.burrito);
+        food.addRestaurant("Freebirds World Burrito", "http://www.yelp.com/biz/freebirds-world-burrito-isla-vista", "http://loyalogy.com/wp-content/uploads/2013/06/freebirds.jpg");
+        food.addRestaurant("Rosarito", "http://www.yelp.com/biz/rosarito-goleta", "http://s3-media3.fl.yelpcdn.com/bphoto/xFRMZv1QUu-g1NONvZ4f5g/o.jpg");
+
+        food = addFood("Tacos", "Mexican", R.drawable.tacos);
+        food.addRestaurant("El Sitio", "http://www.yelp.com/biz/el-sitio-isla-vista?osq=Tacos", "https://www.santabarbara.com/dining/photos/el-sitio-iv-2.jpg");
+        food.addRestaurant("Los Agaves", "http://www.yelp.com/biz/los-agaves-santa-barbara-2", "http://www.losagavesfl.com/i/los_agaves.png");
+
+        food = addFood("Sushi", "Japanese", R.drawable.sushiya_sushi);
+        food.addRestaurant("Sushiya Express", "http://www.yelp.com/biz/sushiya-express-goleta-2", "https://www.santabarbara.com/dining/photos/sushiya-1.jpg");
+		food.addRestaurant("Goleta Sushi House", "http://www.yelp.com/biz/goleta-sushi-house-goleta", "https://res.cloudinary.com/roadtrippers/image/upload/c_fill,h_316,w_520/v1377120383/goleta-sushi-house-52152f504203c3863b000e3c.jpg");
+
+
+		/*
 		addFood("Boiled Brocolli", "Kawaii");
-		addFood("Hamburger", "American");
-		addFood("Cheeseburger", "American");
 		addFood("Katsu", "Japanese");
 		addFood("Ramen", "Japanese");
 		addFood("Curry Rice", "Japanese");
-		addFood("Burrito", "Mexican");
-		addFood("Tacos", "Mexican");*/
+		*/
 	}
 
 

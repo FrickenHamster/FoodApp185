@@ -77,12 +77,12 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         holder.myRestaurantNameView.setText(myDataset.get(position).restaurant);
         holder.myDateView.setText(myDataset.get(position).date);
 
-        if (myDataset.get(position).type.equals("coffee")) {
+        if (myDataset.get(position).type.equals("Coffee")) {
             Drawable myDrawable = holder.context.getResources().getDrawable(R.drawable.caje_coffee);
             Bitmap image = ((BitmapDrawable) myDrawable).getBitmap();
             holder.myPhotoView.setImageBitmap(image);
         }
-        else if (myDataset.get(position).type.equals("bbq")) {
+        else if (myDataset.get(position).type.equals("Barbecue")) {
             Drawable myDrawable = holder.context.getResources().getDrawable(R.drawable.captains_bbq);
             Bitmap image = ((BitmapDrawable) myDrawable).getBitmap();
             holder.myPhotoView.setImageBitmap(image);
@@ -92,22 +92,32 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
             Bitmap image = ((BitmapDrawable) myDrawable).getBitmap();
             holder.myPhotoView.setImageBitmap(image);
         }
-        else if (myDataset.get(position).type.equals("salad")) {
+        else if (myDataset.get(position).type.equals("Salad")) {
             Drawable myDrawable = holder.context.getResources().getDrawable(R.drawable.silvergreens_salad);
             Bitmap image = ((BitmapDrawable) myDrawable).getBitmap();
             holder.myPhotoView.setImageBitmap(image);
         }
-        else if (myDataset.get(position).type.equals("bagels")) {
+        else if (myDataset.get(position).type.equals("Bagel")) {
             Drawable myDrawable = holder.context.getResources().getDrawable(R.drawable.spudnuts_bagels);
             Bitmap image = ((BitmapDrawable) myDrawable).getBitmap();
             holder.myPhotoView.setImageBitmap(image);
         }
-        else if (myDataset.get(position).type.equals("donuts")) {
+        else if (myDataset.get(position).type.equals("Donut")) {
             Drawable myDrawable = holder.context.getResources().getDrawable(R.drawable.spudnuts_donuts);
             Bitmap image = ((BitmapDrawable) myDrawable).getBitmap();
             holder.myPhotoView.setImageBitmap(image);
         }
-        else if (myDataset.get(position).type.equals("sushi")) {
+        else if (myDataset.get(position).type.equals("Burrito")) {
+            Drawable myDrawable = holder.context.getResources().getDrawable(R.drawable.burrito);
+            Bitmap image = ((BitmapDrawable) myDrawable).getBitmap();
+            holder.myPhotoView.setImageBitmap(image);
+        }
+        else if (myDataset.get(position).type.equals("Tacos")) {
+            Drawable myDrawable = holder.context.getResources().getDrawable(R.drawable.tacos);
+            Bitmap image = ((BitmapDrawable) myDrawable).getBitmap();
+            holder.myPhotoView.setImageBitmap(image);
+        }
+        else if (myDataset.get(position).type.equals("Sushi")) {
             Drawable myDrawable = holder.context.getResources().getDrawable(R.drawable.sushiya_sushi);
             Bitmap image = ((BitmapDrawable) myDrawable).getBitmap();
             holder.myPhotoView.setImageBitmap(image);
@@ -128,7 +138,4 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
         return myDataset.size();
     }
 
-    public void deleteAll() {
-
-    }
 }
