@@ -23,11 +23,18 @@ import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.DateTimeFormatterBuilder;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import edu.ucsb.cs.cs185.frickenhamster.food.FoodOrder;
@@ -72,24 +79,6 @@ public class VisualizeActivity extends Activity {
             e.printStackTrace();
         }
 
-        int[] data = new int[5];
-        for (FoodOrder order: dataSet) {
-            if (order.type.compareTo("Hamburger") == 0) {
-                data[0]++;
-            }
-            else if (order.type.compareTo("Pizza") == 0) {
-                data[1]++;
-            }
-            else if (order.type.compareTo("Steak") == 0) {
-                data[2]++;
-            }
-            else if (order.type.compareTo("Pancakes") == 0) {
-                data[3]++;
-            }
-            else {
-                data[4]++;
-            }
-        }
 
         drawGraph();
     }
@@ -118,53 +107,78 @@ public class VisualizeActivity extends Activity {
 
     public void drawGraph() {
 
-        int[] data = new int[5];
+        int[] data = new int[9];
         if (days == -1) {
             for (FoodOrder order: dataSet) {
-                if (order.type.compareTo("Hamburger") == 0) {
+                if (order.type.compareTo("coffee") == 0) {
                     data[0]++;
                 }
-                else if (order.type.compareTo("Pizza") == 0) {
+                else if (order.type.compareTo("bbq") == 0) {
                     data[1]++;
                 }
-                else if (order.type.compareTo("Steak") == 0) {
+                else if (order.type.compareTo("burger") == 0) {
                     data[2]++;
                 }
-                else if (order.type.compareTo("Pancakes") == 0) {
+                else if (order.type.compareTo("salad") == 0) {
                     data[3]++;
                 }
-                else {
+                else if (order.type.compareTo("bagels") == 0) {
                     data[4]++;
+                }
+                else if (order.type.compareTo("donuts") == 0) {
+                    data[5]++;
+                }
+                else if (order.type.compareTo("sushi") == 0) {
+                    data[6]++;
+                }
+                else if (order.type.compareTo("pizza") == 0) {
+                    data[7]++;
+                }
+                else {
+                    data[8]++;
                 }
             }
         }
         else {
             //need to compare date string to date
             for (FoodOrder order: dataSet) {
-                if (order.type.compareTo("Hamburger") == 0) {
+                int daysOld = daysOld(order);
+                if (order.type.compareTo("coffee") == 0) {
                     data[0]++;
                 }
-                else if (order.type.compareTo("Pizza") == 0) {
+                else if (order.type.compareTo("bbq") == 0) {
                     data[1]++;
                 }
-                else if (order.type.compareTo("Steak") == 0) {
+                else if (order.type.compareTo("burger") == 0) {
                     data[2]++;
                 }
-                else if (order.type.compareTo("Pancakes") == 0) {
+                else if (order.type.compareTo("salad") == 0) {
                     data[3]++;
                 }
-                else {
+                else if (order.type.compareTo("bagels") == 0) {
                     data[4]++;
+                }
+                else if (order.type.compareTo("donuts") == 0) {
+                    data[5]++;
+                }
+                else if (order.type.compareTo("sushi") == 0) {
+                    data[6]++;
+                }
+                else if (order.type.compareTo("pizza") == 0) {
+                    data[7]++;
+                }
+                else {
+                    data[8]++;
                 }
             }
         }
 
         BarChart chart = (BarChart) findViewById(R.id.chart);
-        String[] labels = new String[]{"Hamburger", "Pizza", "Steak", "Pancakes"};
+        String[] labels = new String[]{"coffee", "bbq", "burger", "salad", "bagels", "donuts", "sushi", "pizza", "other"};
 
         ArrayList<BarEntry> entries = new ArrayList<BarEntry>();
         int maxVal = 0;
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 9; i++) {
             BarEntry entry = new BarEntry(data[i], i);
             entries.add(entry);
             if (data[i] > maxVal)
@@ -176,6 +190,7 @@ public class VisualizeActivity extends Activity {
         BarData barData = new BarData(labels, barDataSet);
         chart.setData(barData);
         chart.setDrawValueAboveBar(true);
+        chart.setDrawValuesForWholeStack(true);
         chart.getAxisRight().setDrawAxisLine(false);
         chart.getAxisRight().setDrawGridLines(false);
         chart.getAxisRight().setDrawLabels(false);
@@ -184,7 +199,10 @@ public class VisualizeActivity extends Activity {
         chart.getAxisRight().setAxisMaxValue(maxVal + 1);
         chart.getAxisLeft().setShowOnlyMinMax(true);
         chart.getXAxis().setDrawGridLines(false);
+        chart.getXAxis().setDrawAxisLine(true);
         chart.setDescription("");
+        chart.setVisibleXRange(5);
+        chart.setHorizontalScrollBarEnabled(true);
     }
 
 
@@ -206,5 +224,47 @@ public class VisualizeActivity extends Activity {
     public void set7days(MenuItem item) {
         days = 7;
         drawGraph();
+    }
+
+    private int daysOld(FoodOrder order) {
+        String[] dateString = order.date.split(",");
+        if (dateString.length < 2) {
+            System.out.println("date parsing failed, date=" + order.date);
+            return 0;
+        }
+        String[] monthDay = dateString[1].split(" ");
+        String month, day, year;
+        if (dateString.length >= 3 && monthDay.length >= 3) {
+            month = monthDay[1];
+            day = monthDay[2];
+            year = dateString[2].split(" ")[1];
+        }
+        else {
+            System.out.println("date parsing failed, date=" + order.date);
+            return 0;
+        }
+        System.out.println(order.date);
+        System.out.println("I think the date of this order is {" + month + "/" + day + "/" + year + "}");
+
+        DateTime currentDate = new DateTime();
+        int monthint;
+        if (month.compareTo("January") == 0) monthint = 1;
+        else if (month.compareTo("February") == 0) monthint = 2;
+        else if (month.compareTo("March") == 0) monthint = 3;
+        else if (month.compareTo("April") == 0) monthint = 4;
+        else if (month.compareTo("May") == 0) monthint = 5;
+        else if (month.compareTo("June") == 0) monthint = 6;
+        else if (month.compareTo("July") == 0) monthint = 7;
+        else if (month.compareTo("August") == 0) monthint = 8;
+        else if (month.compareTo("September") == 0) monthint = 9;
+        else if (month.compareTo("October") == 0) monthint = 10;
+        else if (month.compareTo("November") == 0) monthint = 11;
+        else if (month.compareTo("December") == 0) monthint = 12;
+        else monthint = 6;
+        DateTime orderDate = new DateTime(Integer.parseInt(year), monthint, Integer.parseInt(day), 0, 0);
+
+        Days days = Days.daysBetween(orderDate, currentDate);
+        System.out.println("this is " + days.getDays() + "days ago");
+        return days.getDays();
     }
 }

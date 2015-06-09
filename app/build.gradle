@@ -49,6 +49,7 @@ dependencies {
     compile 'com.jakewharton:butterknife:6.1.0'
     compile 'com.jjoe64:graphview:4.0.1'
     compile 'com.github.PhilJay:MPAndroidChart:v2.1.0'
+    compile 'net.danlew:android.joda:2.8.0'
 
 
 }
