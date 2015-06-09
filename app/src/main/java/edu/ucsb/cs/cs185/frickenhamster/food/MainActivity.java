@@ -44,7 +44,7 @@ import edu.ucsb.cs.cs185.frickenhamster.food.restaurants.*;
 public class MainActivity extends Activity {
     public final static String FOOD_TYPE = "edu.ucsb.cs.cs185.frickenhamster.food.FOOD_TYPE";
 	
-	public final static int GET_NUM = 20;
+	public final static int GET_NUM = 50;
 
     private ArrayList<Food> array_image;
 

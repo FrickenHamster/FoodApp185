@@ -22,6 +22,7 @@ public class FoodManager
 	private Context context;
 	
 	private Food selected;
+    private int lastRandom;
 
 	public FoodManager(Context context)
 	{
@@ -104,6 +105,10 @@ public class FoodManager
 	public Food getRandomFood()
 	{
 		int nn = (int)(Math.random() * allowedFoods.size());
+        while(lastRandom == nn) {
+            nn = (int)(Math.random() * allowedFoods.size());
+        }
+        lastRandom = nn;
 		return allowedFoods.get(nn);
 	}
 	
