@@ -8,6 +8,7 @@ import android.view.MenuItem;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -187,7 +188,9 @@ public class VisualizeActivity extends Activity {
         BarDataSet barDataSet = new BarDataSet(entries, "Food Types");
         int[] colors = new int[]{getResources().getColor(R.color.hamburger), getResources().getColor(R.color.pizza), getResources().getColor(R.color.steak), getResources().getColor(R.color.pancakes)};
         barDataSet.setColors(colors);
+        barDataSet.setValueTextSize(16f);
         BarData barData = new BarData(labels, barDataSet);
+        barData.setValueTextSize(16f);
         chart.setData(barData);
         chart.setDrawValueAboveBar(true);
         chart.setDrawValuesForWholeStack(true);
@@ -200,9 +203,14 @@ public class VisualizeActivity extends Activity {
         chart.getAxisLeft().setShowOnlyMinMax(true);
         chart.getXAxis().setDrawGridLines(false);
         chart.getXAxis().setDrawAxisLine(true);
+        chart.getXAxis().setTextSize(14f);
+        chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+        chart.getAxisLeft().setTextSize(16f);
         chart.setDescription("");
-        chart.setVisibleXRange(5);
+        chart.setVisibleXRange(4);
         chart.setHorizontalScrollBarEnabled(true);
+        chart.setDescriptionTextSize(16f);
+        chart.getLegend().setTextSize(16f);
     }
 
 
