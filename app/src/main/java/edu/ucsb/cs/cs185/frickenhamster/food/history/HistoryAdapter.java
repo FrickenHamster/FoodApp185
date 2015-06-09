@@ -87,7 +87,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
             Bitmap image = ((BitmapDrawable) myDrawable).getBitmap();
             holder.myPhotoView.setImageBitmap(image);
         }
-        else if (myDataset.get(position).type.equals("burger")) {
+        else if (myDataset.get(position).type.equals("Hamburger")) {
             Drawable myDrawable = holder.context.getResources().getDrawable(R.drawable.habit_burger);
             Bitmap image = ((BitmapDrawable) myDrawable).getBitmap();
             holder.myPhotoView.setImageBitmap(image);
@@ -112,7 +112,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.ViewHold
             Bitmap image = ((BitmapDrawable) myDrawable).getBitmap();
             holder.myPhotoView.setImageBitmap(image);
         }
-        else if (myDataset.get(position).type.equals("pizza")) {
+        else if (myDataset.get(position).type.equals("Pizza")) {
             Drawable myDrawable = holder.context.getResources().getDrawable(R.drawable.woodstocks_pizza);
             Bitmap image = ((BitmapDrawable) myDrawable).getBitmap();
             holder.myPhotoView.setImageBitmap(image);

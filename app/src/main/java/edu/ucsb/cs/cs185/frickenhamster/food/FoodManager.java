@@ -33,7 +33,12 @@ public class FoodManager
 		Food food;
 		food = addFood("Pizza", "Italian", R.drawable.woodstocks_pizza);
 		food.addRestaurant("Woodstock's Pizza", "http://www.yelp.com/biz/woodstocks-pizza-isla-vista-2", "http://s3-media1.fl.yelpcdn.com/bphoto/MqngpKj1_2KjhdIoJqYAAw/l.jpg");
-		
+        food.addRestaurant("Pizza My Heart", "http://www.yelp.com/biz/pizza-my-heart-isla-vista", "https://s-media-cache-ak0.pinimg.com/originals/51/2e/5c/512e5c37a0a1a8b7d66e988722f0bfa1.jpg");
+
+        food = addFood("Hamburger", "American", R.drawable.habit_burger);
+        food.addRestaurant("The Habit", "http://www.yelp.com/biz/the-habit-isla-vista", "http://www.habitburger.com/wp-content/themes/habitburger/images/logo-habit.jpg");
+        food.addRestaurant("The Krusty Krab", "http://www.yelp.com/biz/the-krusty-krab-portland", "http://d.ibtimes.co.uk/en/full/1385860/actual-krusty-krab.jpg");
+
 		/*addFood("Pizza", "American");
 		addFood("Boiled Brocolli", "Kawaii");
 		addFood("Hamburger", "American");
