@@ -184,6 +184,8 @@ public class MainActivity extends Activity
 				//If you want to use it just cast it (String) dataObject
 				array_image.add(foodManager.getRandomFood());
 				arrayPicAdapter.notifyDataSetChanged();
+				Log.d("uguu", "cards in array" + array_image.size());
+				System.gc();
 			}
 
 			@Override
@@ -210,10 +212,11 @@ public class MainActivity extends Activity
                 array_image.add(fImage6);
                 array_image.add(fImage7);
                 array_image.add(fImage8);*/
-				for (int j = 0; j < GET_NUM; j++)
+				System.gc();
+				/*for (int j = array_image.size(); j < GET_NUM; j++)
 				{
 					array_image.add(foodManager.getRandomFood());
-				}
+				}*/
 				arrayPicAdapter.notifyDataSetChanged();
 				Log.d("LIST", "notified");
 			}

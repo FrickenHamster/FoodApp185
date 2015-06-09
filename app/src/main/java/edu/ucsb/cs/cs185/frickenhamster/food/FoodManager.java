@@ -164,8 +164,6 @@ public class FoodManager
 			return;
 		cuisine.setAllowed(true);
 		SharedPreferences.Editor edit = sharedPref.edit();
-		Log.d("uguu", "allow");
-		edit.putBoolean("pref" + cuisine.getName(), true);
 		edit.commit();
 		
 	}
@@ -177,8 +175,6 @@ public class FoodManager
 			return;
 		cuisine.setAllowed(false);
 		SharedPreferences.Editor edit = sharedPref.edit();
-		Log.d("uguu", "disallow");
-		edit.putBoolean("pref" + cuisine.getName(), false);
 		edit.commit();
 	}
 	
