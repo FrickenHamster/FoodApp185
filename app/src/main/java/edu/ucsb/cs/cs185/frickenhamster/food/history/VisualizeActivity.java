@@ -36,7 +36,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import edu.ucsb.cs.cs185.frickenhamster.food.FoodOrder;
 import edu.ucsb.cs.cs185.frickenhamster.food.R;
@@ -109,82 +111,106 @@ public class VisualizeActivity extends Activity {
     public void drawGraph() {
 
         int[] data = new int[9];
+        HashMap<String, Integer> dataMap = new HashMap<String, Integer>();
         if (days == -1) {
             for (FoodOrder order: dataSet) {
-                if (order.type.compareTo("coffee") == 0) {
-                    data[0]++;
-                }
-                else if (order.type.compareTo("bbq") == 0) {
-                    data[1]++;
-                }
-                else if (order.type.compareTo("burger") == 0) {
-                    data[2]++;
-                }
-                else if (order.type.compareTo("salad") == 0) {
-                    data[3]++;
-                }
-                else if (order.type.compareTo("bagels") == 0) {
-                    data[4]++;
-                }
-                else if (order.type.compareTo("donuts") == 0) {
-                    data[5]++;
-                }
-                else if (order.type.compareTo("sushi") == 0) {
-                    data[6]++;
-                }
-                else if (order.type.compareTo("pizza") == 0) {
-                    data[7]++;
+                if (dataMap.containsKey(order.type)) {
+                    dataMap.put(order.type, dataMap.get(order.type) + 1);
                 }
                 else {
-                    data[8]++;
+                    dataMap.put(order.type, 1);
                 }
+//                if (order.type.compareTo("coffee") == 0) {
+//                    data[0]++;
+//                }
+//                else if (order.type.compareTo("bbq") == 0) {
+//                    data[1]++;
+//                }
+//                else if (order.type.compareTo("burger") == 0) {
+//                    data[2]++;
+//                }
+//                else if (order.type.compareTo("salad") == 0) {
+//                    data[3]++;
+//                }
+//                else if (order.type.compareTo("bagels") == 0) {
+//                    data[4]++;
+//                }
+//                else if (order.type.compareTo("donuts") == 0) {
+//                    data[5]++;
+//                }
+//                else if (order.type.compareTo("sushi") == 0) {
+//                    data[6]++;
+//                }
+//                else if (order.type.compareTo("pizza") == 0) {
+//                    data[7]++;
+//                }
+//                else {
+//                    data[8]++;
+//                }
             }
         }
         else {
             //need to compare date string to date
             for (FoodOrder order: dataSet) {
                 int daysOld = daysOld(order);
-                if (order.type.compareTo("coffee") == 0) {
-                    data[0]++;
-                }
-                else if (order.type.compareTo("bbq") == 0) {
-                    data[1]++;
-                }
-                else if (order.type.compareTo("burger") == 0) {
-                    data[2]++;
-                }
-                else if (order.type.compareTo("salad") == 0) {
-                    data[3]++;
-                }
-                else if (order.type.compareTo("bagels") == 0) {
-                    data[4]++;
-                }
-                else if (order.type.compareTo("donuts") == 0) {
-                    data[5]++;
-                }
-                else if (order.type.compareTo("sushi") == 0) {
-                    data[6]++;
-                }
-                else if (order.type.compareTo("pizza") == 0) {
-                    data[7]++;
-                }
-                else {
-                    data[8]++;
+//                if (order.type.compareTo("coffee") == 0) {
+//                    data[0]++;
+//                }
+//                else if (order.type.compareTo("bbq") == 0) {
+//                    data[1]++;
+//                }
+//                else if (order.type.compareTo("burger") == 0) {
+//                    data[2]++;
+//                }
+//                else if (order.type.compareTo("salad") == 0) {
+//                    data[3]++;
+//                }
+//                else if (order.type.compareTo("bagels") == 0) {
+//                    data[4]++;
+//                }
+//                else if (order.type.compareTo("donuts") == 0) {
+//                    data[5]++;
+//                }
+//                else if (order.type.compareTo("sushi") == 0) {
+//                    data[6]++;
+//                }
+//                else if (order.type.compareTo("pizza") == 0) {
+//                    data[7]++;
+//                }
+//                else {
+//                    data[8]++;
+//                }
+                if (daysOld < days) {
+                    if (dataMap.containsKey(order.type)) {
+                        dataMap.put(order.type, dataMap.get(order.type) + 1);
+                    } else {
+                        dataMap.put(order.type, 1);
+                    }
                 }
             }
         }
 
         BarChart chart = (BarChart) findViewById(R.id.chart);
-        String[] labels = new String[]{"coffee", "bbq", "burger", "salad", "bagels", "donuts", "sushi", "pizza", "other"};
-
+        //String[] labels = new String[]{"coffee", "bbq", "burger", "salad", "bagels", "donuts", "sushi", "pizza", "other"};
+        String[] labels = new String[dataMap.size()];
         ArrayList<BarEntry> entries = new ArrayList<BarEntry>();
         int maxVal = 0;
-        for (int i = 0; i < 9; i++) {
-            BarEntry entry = new BarEntry(data[i], i);
+        int i = 0;
+        for (Map.Entry keyValue : dataMap.entrySet()) {
+            BarEntry entry = new BarEntry(((Integer) keyValue.getValue()), i);
+            System.out.println("dataSet: " + i + ", " + entry.getVal());
+            labels[i] = (String) keyValue.getKey();
             entries.add(entry);
-            if (data[i] > maxVal)
-                maxVal = data[i];
+            if ((Integer) keyValue.getValue() > maxVal) maxVal = (Integer) keyValue.getValue();
+            i++;
         }
+//        for (int i = 0; i < 9; i++) {
+//            BarEntry entry = new BarEntry(data[i], i);
+//            entries.add(entry);
+//
+//            if (data[i] > maxVal)
+//                maxVal = data[i];
+//        }
         BarDataSet barDataSet = new BarDataSet(entries, "Food Types");
         int[] colors = new int[]{getResources().getColor(R.color.hamburger), getResources().getColor(R.color.pizza), getResources().getColor(R.color.steak), getResources().getColor(R.color.pancakes)};
         barDataSet.setColors(colors);
