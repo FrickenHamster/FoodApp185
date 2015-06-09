@@ -29,6 +29,7 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import edu.ucsb.cs.cs185.frickenhamster.food.history.HistoryActivity;
 import edu.ucsb.cs.cs185.frickenhamster.food.FoodImage;
+import edu.ucsb.cs.cs185.frickenhamster.food.pref.*;
 import edu.ucsb.cs.cs185.frickenhamster.food.restaurants.*;
 
 
@@ -57,6 +58,8 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		
 		//startActivity(new Intent(this, RestaurantsActivity.class));
+		PrefDialog dialog = new PrefDialog();
+		dialog.show(getFragmentManager(), "Pref Pick");
 		
 		ButterKnife.inject(this);
 
