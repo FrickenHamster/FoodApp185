@@ -1,6 +1,7 @@
 package edu.ucsb.cs.cs185.frickenhamster.food.pref;
 
 import android.app.*;
+import android.content.*;
 import android.os.*;
 import android.support.v7.widget.*;
 import android.view.*;
@@ -42,7 +43,14 @@ public class PrefDialog extends DialogFragment
 		
 		builder.setView(v);
 		
-		builder.setTitle(R.string.pref_title);
+		builder.setTitle(R.string.pref_title).setPositiveButton("Done", new DialogInterface.OnClickListener()
+		{
+			@Override
+			public void onClick(DialogInterface dialog, int which)
+			{
+				
+			}
+		});
 		
 		AlertDialog dialog = builder.create();
 		return dialog;

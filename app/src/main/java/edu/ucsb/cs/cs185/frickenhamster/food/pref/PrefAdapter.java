@@ -2,6 +2,7 @@ package edu.ucsb.cs.cs185.frickenhamster.food.pref;
 
 import android.support.v7.widget.*;
 import android.text.*;
+import android.util.*;
 import android.view.*;
 import android.widget.*;
 import edu.ucsb.cs.cs185.frickenhamster.food.*;
@@ -20,11 +21,13 @@ public class PrefAdapter extends RecyclerView.Adapter<PrefAdapter.PrefViewHolder
 	
 	public class PrefViewHolder extends RecyclerView.ViewHolder
 	{
+		RelativeLayout view;
 		TextView textView;
 		CheckBox checkBox;
 		public PrefViewHolder(View itemView)
 		{
 			super(itemView);
+			view = (RelativeLayout) itemView.findViewById(R.id.pref_view);
 			textView = (TextView) itemView.findViewById(R.id.pref_name);
 			checkBox = (CheckBox) itemView.findViewById(R.id.pref_checkbox);
 			
@@ -47,14 +50,33 @@ public class PrefAdapter extends RecyclerView.Adapter<PrefAdapter.PrefViewHolder
 	}
 
 	@Override
-	public void onBindViewHolder(PrefViewHolder holder, int position)
+	public void onBindViewHolder(final PrefViewHolder holder, int position)
 	{
-		Cuisine cuisine = cuisines.get(position);
+		final Cuisine cuisine = cuisines.get(position);
 		holder.textView.setText(cuisine.getName());
 		if (cuisine.isAllowed())
 		{
 			holder.checkBox.setChecked(true);
 		}
+		
+		holder.view.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				if (cuisine.isAllowed())
+				{
+					cuisine.setAllowed(false);
+					holder.checkBox.setChecked(false);
+				}
+				else
+				{
+					cuisine.setAllowed(true);
+					holder.checkBox.setChecked(true);
+				}
+				notifyDataSetChanged();
+			}
+		});
 	}
 
 	@Override
