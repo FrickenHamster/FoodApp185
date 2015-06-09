@@ -252,46 +252,46 @@ public class MainActivity extends Activity {
         Collections.reverse(historyListItems);
 
         mTitle = mDrawerTitle = getTitle();
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerToggle = new ActionBarDrawerToggle(
-                this,                  /* host Activity */
-                mDrawerLayout,         /* DrawerLayout object */
-                R.drawable.ic_drawer,  /* nav drawer icon to replace 'Up' caret */
-                R.string.drawer_open,  /* "open drawer" description */
-                R.string.drawer_close  /* "close drawer" description */
-                ) {
-            /** Called when a drawer has settled in a completely closed state. */
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-                getActionBar().setTitle(mTitle);
-            }
-
-            /** Called when a drawer has settled in a completely open state. */
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                getActionBar().setTitle(mDrawerTitle);
-            }
-        };
-
-        // Set the drawer toggle as the DrawerListener
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
-
-        mDrawer = (LinearLayout) findViewById(R.id.drawer_linearlayout);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        mDrawerHistoryList = (ListView) findViewById(R.id.left_drawer_history);
-
-        // Set the adapter for the menu list view
-        mDrawerList.setAdapter(new ArrayAdapter<String>(this,
-                R.layout.drawer_list_item_layout, R.id.list_item_name, listItems));
-        // Set the adapter for the history list view
-        mDrawerHistoryList.setAdapter(new ArrayAdapter<String>(this,
-                R.layout.drawer_history_list_item, R.id.list_item_name, historyListItems));
-        // Set the list's click listener
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-        //mDrawerHistoryList.setOnItemClickListener(new DrawerItemClickListener());
+//        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+//        mDrawerToggle = new ActionBarDrawerToggle(
+//                this,                  /* host Activity */
+//                mDrawerLayout,         /* DrawerLayout object */
+//                R.drawable.ic_drawer,  /* nav drawer icon to replace 'Up' caret */
+//                R.string.drawer_open,  /* "open drawer" description */
+//                R.string.drawer_close  /* "close drawer" description */
+//                ) {
+//            /** Called when a drawer has settled in a completely closed state. */
+//            public void onDrawerClosed(View view) {
+//                super.onDrawerClosed(view);
+//                getActionBar().setTitle(mTitle);
+//            }
+//
+//            /** Called when a drawer has settled in a completely open state. */
+//            public void onDrawerOpened(View drawerView) {
+//                super.onDrawerOpened(drawerView);
+//                getActionBar().setTitle(mDrawerTitle);
+//            }
+//        };
+//
+//        // Set the drawer toggle as the DrawerListener
+//        mDrawerLayout.setDrawerListener(mDrawerToggle);
+//
+//        getActionBar().setDisplayHomeAsUpEnabled(true);
+//        getActionBar().setHomeButtonEnabled(true);
+//
+//        mDrawer = (LinearLayout) findViewById(R.id.drawer_linearlayout);
+//        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+//        mDrawerHistoryList = (ListView) findViewById(R.id.left_drawer_history);
+//
+//        // Set the adapter for the menu list view
+//        mDrawerList.setAdapter(new ArrayAdapter<String>(this,
+//                R.layout.drawer_list_item_layout, R.id.list_item_name, listItems));
+//        // Set the adapter for the history list view
+//        mDrawerHistoryList.setAdapter(new ArrayAdapter<String>(this,
+//                R.layout.drawer_history_list_item, R.id.list_item_name, historyListItems));
+//        // Set the list's click listener
+//        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+//        //mDrawerHistoryList.setOnItemClickListener(new DrawerItemClickListener());
 	}
 
 	static void makeToast(Context ctx, String s)
@@ -347,6 +347,50 @@ public class MainActivity extends Activity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
+
+        mTitle = mDrawerTitle = getTitle();
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerToggle = new ActionBarDrawerToggle(
+                this,                  /* host Activity */
+                mDrawerLayout,         /* DrawerLayout object */
+                R.drawable.ic_drawer,  /* nav drawer icon to replace 'Up' caret */
+                R.string.drawer_open,  /* "open drawer" description */
+                R.string.drawer_close  /* "close drawer" description */
+        ) {
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                getActionBar().setTitle(mTitle);
+            }
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                getActionBar().setTitle(mDrawerTitle);
+            }
+        };
+
+        // Set the drawer toggle as the DrawerListener
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+
+        mDrawer = (LinearLayout) findViewById(R.id.drawer_linearlayout);
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        mDrawerHistoryList = (ListView) findViewById(R.id.left_drawer_history);
+
+        // Set the adapter for the menu list view
+        mDrawerList.setAdapter(new ArrayAdapter<String>(this,
+                R.layout.drawer_list_item_layout, R.id.list_item_name, listItems));
+        // Set the adapter for the history list view
+        mDrawerHistoryList.setAdapter(new ArrayAdapter<String>(this,
+                R.layout.drawer_history_list_item, R.id.list_item_name, historyListItems));
+        // Set the list's click listener
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+        //mDrawerHistoryList.setOnItemClickListener(new DrawerItemClickListener());
+
+
         // Sync the toggle state after onRestoreInstanceState has occurred.
         mDrawerToggle.syncState();
     }
