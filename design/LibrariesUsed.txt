@@ -1,5 +1,5 @@
-The libraries below are were used in the project.
-All of them are publically available and the
+The libraries below were used in the project.
+All of them are publicaly available and the
 source codes can be found on github.
 
 http://www.joda.org/joda-time/
